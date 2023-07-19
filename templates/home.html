@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="flex-container" style="display: flex">
+        <div class="flex-child" style="flex:1; margin-right: 2%">
+            <h2>For beginners</h2>
+            <br/>
+            <h4>What are stocks?</h4>
+            Stocks are a type of security that gives stockholders a share of ownership in a company. Stocks also are
+            called
+            “equities.”
+            <br/><br/>
+            <h4>Why do people buy stocks?</h4>
+            Investors buy stocks for various reasons. Here are some of them:
+            <ul>
+                <li>Capital appreciation, which occurs when a stock rises in price</li>
+                <li>Dividend payments, which come when the company distributes some of its earnings to stockholders</li>
+                <li>Ability to vote shares and influence the company</li>
+            </ul>
+            <h4>Why do companies issue stock?</h4>
+            Companies issue stock to get money for various things, which may include:
+            <ul>
+                <li>Paying off debt</li>
+                <li>Launching new products</li>
+                <li>Expanding into new markets or regions</li>
+                <li>Enlarging facilities or building new ones</li>
+            </ul>
+            <h4>What is a ticker?</h4>
+            A stock symbol or ticker is a unique series of letters assigned to a security for trading purposes.
+            Stocks listed on the New York Stock Exchange (NYSE) can have four or fewer letters.
+            Nasdaq-listed securities can have up to five characters.
+            Symbols are just a shorthand way of describing a company's stock, so there is no significant difference
+            between those that have three letters and those that have four or five. Stock symbols are also known as
+            ticker
+            symbols. For example:
+            <br/><br/>
+
+
+{#            <div class="flex-container" style="display: flex;">#}
+{#                <div class="flex-child" style="flex: 1; margin-right: 10%">#}
+{#                    <table class="table">#}
+{#                        <thead>#}
+{#                        </thead>#}
+{#                        <tbody>#}
+{#                        <tr>#}
+{#                            <th scope="row">TSLA</th>#}
+{#                            <td style="text-align: right">Tesla</td>#}
+{#                        </tr>#}
+{#                        <tr>#}
+{#                            <th scope="row">AAPL</th>#}
+{#                            <td style="text-align: right">Apple</td>#}
+{#                        </tr>#}
+{#                        <tr>#}
+{#                            <th scope="row">MSFT</th>#}
+{#                            <td style="text-align: right">Microsoft</td>#}
+{#                        </tr>#}
+{#                        <tr>#}
+{#                            <th scope="row">AMZN</th>#}
+{#                            <td style="text-align: right">Amazon</td>#}
+{#                        </tr>#}
+{#                        <tr>#}
+{#                            <th scope="row">KO</th>#}
+{#                            <td style="text-align: right">Coca-Cola</td>#}
+{#                        </tr>#}
+{#                        </tbody>#}
+{#                    </table>#}
+{#                </div>#}
+{#                <div class="flex-child" style="flex: 1">#}
+{#                    <table class="table">#}
+{#                        <thead>#}
+{#                        </thead>#}
+{#                        <tbody>#}
+{#                        <tr>#}
+{#                            <th scope="row">F</th>#}
+{#                            <td style="text-align: right">Ford</td>#}
+{#                        </tr>#}
+{#                        <tr>#}
+{#                            <th scope="row">NVDA</th>#}
+{#                            <td style="text-align: right">Nvidia</td>#}
+{#                        </tr>#}
+{#                        <tr>#}
+{#                            <th scope="row">CSCO</th>#}
+{#                            <td style="text-align: right">Cisco</td>#}
+{#                        </tr>#}
+{#                        <tr>#}
+{#                            <th scope="row">MCD</th>#}
+{#                            <td style="text-align: right">McDonald's</td>#}
+{#                        </tr>#}
+{#                        <tr>#}
+{#                            <th scope="row">DIS</th>#}
+{#                            <td style="text-align: right">Walt Disney</td>#}
+{#                        </tr>#}
+{#                        </tbody>#}
+{#                    </table>#}
+{##}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="flex-child" style="flex:1">#}
+{#            <h2 style="text-align: center;">Monthly charts of selected companies </h2>#}
+{#            <br/>#}
+{#            <canvas id="line-chart"></canvas>#}
+{#            <br/>#}
+{#            <br/>#}
+{#            <br/>#}
+{#            <canvas id="line-chart_msft"></canvas>#}
+{#        </div>#}
+{#        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>#}
+{#        <script>#}
+{##}
+{#            new Chart(document.getElementById("line-chart"), {#}
+{#                type: 'line',#}
+{#                data: {#}
+{#                    labels: {{ labels|safe }},#}
+{#                    datasets: [{#}
+{#                        data: {{ data|safe }},#}
+{#                        label: "Apple",#}
+{#                        borderColor: "#A2AAAD",#}
+{#                        fill: false#}
+{#                    },]#}
+{#                },#}
+{#                options: {#}
+{#                    display: true,#}
+{#                    legend: false,#}
+{#                    title: {#}
+{#                        display: true,#}
+{#                        text: "Apple"#}
+{#                    },#}
+{#                    responsive: true#}
+{#                }#}
+{#            });#}
+{##}
+{#            new Chart(document.getElementById("line-chart_msft"), {#}
+{#                type: 'line',#}
+{#                data: {#}
+{#                    labels: {{ labels_msft|safe }},#}
+{#                    datasets: [{#}
+{#                        data: {{ data_msft|safe }},#}
+{#                        label: "Microsoft",#}
+{#                        borderColor: "#00a1f1",#}
+{#                        fill: false#}
+{#                    },]#}
+{#                },#}
+{#                options: {#}
+{#                    display: true,#}
+{#                    legend: false,#}
+{#                    title: {#}
+{#                        display: true,#}
+{#                        text: "Microsoft"#}
+{#                    },#}
+{#                    responsive: true#}
+{#                }#}
+{#            });#}
+{##}
+{#        </script>#}
+    </div>
+{% endblock %}
