@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
+
     <h2>Today is: {{ day }}, {{ today.day }} {{ month }} {{ today.year }}</h2>
     <div>
-    {{ fig | safe }}
+    {{ div | safe }}
+        {{ script | safe  }}
+
     </div>
 {% endblock %}
