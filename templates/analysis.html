@@ -2,9 +2,31 @@
 {% block content %}
 
     <h2>Today is: {{ day }}, {{ today.day }} {{ month }} {{ today.year }}</h2>
+    <br>
     <div>
-    {{ div | safe }}
-        {{ script | safe  }}
-
+        {{ divN | safe }}
+        {{ scriptN | safe }}
     </div>
+    <form method="post" name="timeInterval"> {% csrf_token %}
+        <span>Range: </span>
+        <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="1m">1m</button>
+        <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="3m">3m</button>
+        <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="6m">6m</button>
+        <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="1y">1y</button>
+        <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="5y">5y</button>
+
+    </form>
+    <div>
+        {{ divS | safe }}
+        {{ scriptS | safe }}
+    </div>
+    <form method="post" name="timeInterval"> {% csrf_token %}
+        <span>Range: </span>
+        <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="1m">1m</button>
+        <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="3m">3m</button>
+        <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="6m">6m</button>
+        <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="1y">1y</button>
+        <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="5y">5y</button>
+
+    </form>
 {% endblock %}
