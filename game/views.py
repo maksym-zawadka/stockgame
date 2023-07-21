@@ -80,7 +80,7 @@ def analysis(request):
     dec = df.Open > df.Close
     w = 12 * 60 * 60 * 1000  # half day in ms
     # Tworzenie wykresu świecowego
-    p = figure(x_axis_type='datetime', title='Nasdaq 100 (^NDX)', width=1000, height=500, sizing_mode="fixed", tools="")
+    p = figure(x_axis_type='datetime', title='Nasdaq 100 (^NDX)', width=800, height=400, sizing_mode="fixed", tools="")
     p.segment(x0='Date', y0='High', x1='Date', y1='Low', source=source, color="black")
     p.vbar(df.Date[inc], w, df.Open[inc], df.Close[inc], fill_color="green", line_color="black")
     p.vbar(df.Date[dec], w, df.Open[dec], df.Close[dec], fill_color="red", line_color="black")
@@ -106,7 +106,7 @@ def analysis(request):
     decS = dfS.Open > dfS.Close
     w = 12 * 60 * 60 * 1000  # half day in ms
     # Tworzenie wykresu świecowego
-    pS = figure(x_axis_type='datetime', title='S&P 500 (^SPX)', width=1000, height=500, sizing_mode="fixed", tools="")
+    pS = figure(x_axis_type='datetime', title='S&P 500 (^SPX)', width=800, height=400, sizing_mode="fixed", tools="")
     pS.segment(x0='Date', y0='High', x1='Date', y1='Low', source=sourceS, color="black")
     pS.vbar(dfS.Date[incS], w, dfS.Open[incS], dfS.Close[incS], fill_color="green", line_color="black")
     pS.vbar(dfS.Date[decS], w, dfS.Open[decS], dfS.Close[decS], fill_color="red", line_color="black")

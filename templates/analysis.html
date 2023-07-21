@@ -1,33 +1,35 @@
 {% extends 'base.html' %}
 {% block content %}
+        <h2>Today is: {{ day }}, {{ today.day }} {{ month }} {{ today.year }}</h2>
+    <div style="display: flex; flex-direction: row; justify-content: space-between; margin-top: 30px" >
+        <div style="order: 1">
+            {{ divN | safe }}
+            {{ scriptN | safe }}
 
-    <h2>Today is: {{ day }}, {{ today.day }} {{ month }} {{ today.year }}</h2>
-    <br>
-    <div>
-        {{ divN | safe }}
-        {{ scriptN | safe }}
+            <form method="post" name="timeInterval"> {% csrf_token %}
+                <span>Range: </span>
+                <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="1m">1m</button>
+                <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="3m">3m</button>
+                <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="6m">6m</button>
+                <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="1y">1y</button>
+                <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="5y">5y</button>
+
+            </form>
+        </div>
+        <br>
+        <div style="order: 1">
+            {{ divS | safe }}
+            {{ scriptS | safe }}
+
+            <form method="post" name="timeInterval"> {% csrf_token %}
+                <span>Range: </span>
+                <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="1m">1m</button>
+                <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="3m">3m</button>
+                <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="6m">6m</button>
+                <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="1y">1y</button>
+                <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="5y">5y</button>
+
+            </form>
+        </div>
     </div>
-    <form method="post" name="timeInterval"> {% csrf_token %}
-        <span>Range: </span>
-        <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="1m">1m</button>
-        <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="3m">3m</button>
-        <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="6m">6m</button>
-        <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="1y">1y</button>
-        <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="5y">5y</button>
-
-    </form>
-    <br>
-    <div>
-        {{ divS | safe }}
-        {{ scriptS | safe }}
-    </div>
-    <form method="post" name="timeInterval"> {% csrf_token %}
-        <span>Range: </span>
-        <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="1m">1m</button>
-        <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="3m">3m</button>
-        <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="6m">6m</button>
-        <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="1y">1y</button>
-        <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="5y">5y</button>
-
-    </form>
 {% endblock %}
