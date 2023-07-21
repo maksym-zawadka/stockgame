@@ -8,7 +8,7 @@ from dateutil.relativedelta import relativedelta
 from bokeh.plotting import figure
 from bokeh.models import ColumnDataSource,DatetimeTickFormatter
 from bokeh.embed import components
-
+from django.core.cache import cache
 
 def home(request):
     return render(request, 'home.html')
@@ -21,34 +21,53 @@ def analysis(request):
     dayName = today.strftime("%A")
     monthName = today.strftime("%B")
     daysInGame = 0
-    ndays = 92
-    ndaysSP = 60
+    defaultndays = 92
+    defaultndaysSP = 63
+    #pobranie zakresu i zachowanie w sesji
     if request.method == 'POST':
-        button_val=request.POST.get('saveTimeN')
-        if button_val == "1m":
+        buttonNDX=request.POST.get('saveTimeN')
+        if buttonNDX == "1m":
             ndays=30
-        elif button_val == "3m":
+            request.session['daysNDX']=ndays
+        elif buttonNDX == "3m":
             ndays=92
-        elif button_val == "6m":
+            request.session['daysNDX']=ndays
+        elif buttonNDX == "6m":
             ndays = 183
-        elif button_val == "1y":
+            request.session['daysNDX']=ndays
+        elif buttonNDX == "1y":
             ndays = 365
-        elif button_val == "5y":
+            request.session['daysNDX']=ndays
+        elif buttonNDX == "5y":
             ndays = 1825
-        button_val = request.POST.get('saveTimeS')
-        if button_val == "1m":
+            request.session['daysNDX']=ndays
+        buttonSP = request.POST.get('saveTimeS')
+        if buttonSP == "1m":
             ndaysSP = 20
-        elif button_val == "3m":
+            request.session['daysSP']=ndaysSP
+        elif buttonSP == "3m":
             ndaysSP = 60
-        elif button_val == "6m":
+            request.session['daysSP'] = ndaysSP
+        elif buttonSP == "6m":
             ndaysSP = 120
-        elif button_val == "1y":
+            request.session['daysSP'] = ndaysSP
+        elif buttonSP == "1y":
             ndaysSP = 240
-        elif button_val == "5y":
+            request.session['daysSP'] = ndaysSP
+        elif buttonSP == "5y":
             ndaysSP = 1200
+            request.session['daysSP'] = ndaysSP
         # chart
         # 1828 - ostatni dzien z przed rozpoczeciem
 
+    #Zachowanie przedzialu czasu w zmiennej sesji
+    ndays = request.session.get('daysNDX')
+    if ndays is None:
+        ndays = defaultndays
+
+    ndaysSP = request.session.get('daysSP')
+    if ndaysSP is None:
+        ndaysSP = defaultndaysSP
     #NASDAQ 100
     df = pd.read_csv("Stocks/ndx.csv", sep=';', header=0, encoding='utf-8', nrows=ndays, skiprows=range(1,1828+daysInGame-ndays))
 
@@ -78,7 +97,7 @@ def analysis(request):
 
     #SP500
     #1258
-    dfS = pd.read_csv("Stocks/spx.csv", sep=';', header=0, encoding='utf-8', nrows=90)
+    dfS = pd.read_csv("Stocks/spx.csv", sep=';', header=0, encoding='utf-8', nrows=ndaysSP, skiprows=range(1,1259+daysInGame-ndaysSP))
 
     dfS['Date'] = pd.to_datetime(dfS['Date'])
     sourceS = ColumnDataSource(dfS)
