@@ -21,6 +21,7 @@ from game import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name="home"),
-    path('analysis/', views.analysis, name="analysis")
-
+    path('analysis/', views.analysis, name="analysis"),
+    path('portfolio/', views.portfolio, name="portfolio"),
+    path('dopasowania/', views.dopasowania, name='dopasowania'),
 ]

@@ -1,14 +1,11 @@
-from django.shortcuts import render, redirect
-from datetime import datetime, date
-from .models import TodayDate
-import plotly.graph_objs as go
+from django.shortcuts import render
+from .models import TodayDate, Stock, Money
 import pandas as pd
-import plotly.offline as opy
-from dateutil.relativedelta import relativedelta
 from bokeh.plotting import figure
-from bokeh.models import ColumnDataSource,DatetimeTickFormatter
+from bokeh.models import ColumnDataSource, DatetimeTickFormatter
 from bokeh.embed import components
-from django.core.cache import cache
+from django.http import JsonResponse
+from django.views.decorators.http import require_GET
 
 def home(request):
     return render(request, 'home.html')
@@ -20,33 +17,34 @@ def analysis(request):
     today = todayObj.date
     dayName = today.strftime("%A")
     monthName = today.strftime("%B")
-    daysInGame = 0
+    daysInGame = todayObj.daysInGame
     defaultndays = 92
     defaultndaysSP = 63
-    #pobranie zakresu i zachowanie w sesji
+    ndaysD=63
+    # pobranie zakresu i zachowanie w sesji
     if request.method == 'POST':
-        buttonNDX=request.POST.get('saveTimeN')
+        buttonNDX = request.POST.get('saveTimeN')
         if buttonNDX == "1m":
-            ndays=30
-            request.session['daysNDX']=ndays
+            ndays = 30
+            request.session['daysNDX'] = ndays
         elif buttonNDX == "3m":
-            ndays=92
-            request.session['daysNDX']=ndays
+            ndays = 92
+            request.session['daysNDX'] = ndays
         elif buttonNDX == "6m":
             ndays = 183
-            request.session['daysNDX']=ndays
+            request.session['daysNDX'] = ndays
         elif buttonNDX == "1y":
             ndays = 365
-            request.session['daysNDX']=ndays
+            request.session['daysNDX'] = ndays
         elif buttonNDX == "5y":
             ndays = 1825
-            request.session['daysNDX']=ndays
+            request.session['daysNDX'] = ndays
         buttonSP = request.POST.get('saveTimeS')
         if buttonSP == "1m":
             ndaysSP = 20
-            request.session['daysSP']=ndaysSP
+            request.session['daysSP'] = ndaysSP
         elif buttonSP == "3m":
-            ndaysSP = 60
+            ndaysSP = 63
             request.session['daysSP'] = ndaysSP
         elif buttonSP == "6m":
             ndaysSP = 120
@@ -57,10 +55,24 @@ def analysis(request):
         elif buttonSP == "5y":
             ndaysSP = 1200
             request.session['daysSP'] = ndaysSP
+        buttonD = request.POST.get('saveTimeD')
+        if buttonD == "1m":
+            ndaysD= 20
+        elif buttonD == "3m":
+            ndaysD = 63
+        elif buttonD == "6m":
+            ndaysD = 120
+        elif buttonD == "1y":
+            ndaysD = 240
+        elif buttonD == "max":
+            ndaysD = 1200
+        if 'search_button' in request.POST:
+             request.session['ticker']= request.POST.get('ticker')
+
         # chart
         # 1828 - ostatni dzien z przed rozpoczeciem
 
-    #Zachowanie przedzialu czasu w zmiennej sesji
+    # Zachowanie przedzialu czasu w zmiennej sesji
     ndays = request.session.get('daysNDX')
     if ndays is None:
         ndays = defaultndays
@@ -68,11 +80,10 @@ def analysis(request):
     ndaysSP = request.session.get('daysSP')
     if ndaysSP is None:
         ndaysSP = defaultndaysSP
-    #NASDAQ 100
-    df = pd.read_csv("Stocks/ndx.csv", sep=';', header=0, encoding='utf-8', nrows=ndays, skiprows=range(1,1828+daysInGame-ndays))
+    # NASDAQ 100
+    df = pd.read_csv("Stocks/ndx.csv", sep=';', header=0, encoding='utf-8', nrows=ndays,
+                     skiprows=range(1, 1828 + daysInGame - ndays))
 
-    # fig = go.Figure(
-    #     data=[go.Candlestick(x=df['Date'], open=df['Open'], high=df['High'], low=df['Low'], close=df['Close'])])
     df['Date'] = pd.to_datetime(df['Date'])
     source = ColumnDataSource(df)
 
@@ -90,14 +101,14 @@ def analysis(request):
     p.xaxis.formatter = DatetimeTickFormatter(
         days=["%d/%m/%Y"],
         months=["%d/%m/%Y"],
-        years=["%d/%m/%Y"],)
+        years=["%d/%m/%Y"], )
 
     scriptN, divN = components(p)
 
-
-    #SP500
-    #1258
-    dfS = pd.read_csv("Stocks/spx.csv", sep=';', header=0, encoding='utf-8', nrows=ndaysSP, skiprows=range(1,1259+daysInGame-ndaysSP))
+    # SP500
+    # 1258
+    dfS = pd.read_csv("Stocks/spx.csv", sep=';', header=0, encoding='utf-8', nrows=ndaysSP,
+                      skiprows=range(1, 1259 + daysInGame - ndaysSP))
 
     dfS['Date'] = pd.to_datetime(dfS['Date'])
     sourceS = ColumnDataSource(dfS)
@@ -120,5 +131,76 @@ def analysis(request):
 
     scriptS, divS = components(pS)
 
+    divD=""
+    scriptD=""
+
+    # WYSZUKIWANIE
+    ticker = request.session.get('ticker')
+    if ticker is None:
+        ticker = ""
+    if ticker:
+        #szukanie ktora z kolei jest linia z dzisiejsza data
+        date=today.strftime("%Y-%m-%d")
+        linenum=0
+        f = open("Stocks/" + ticker + ".us.csv")
+        for nr_linii, linia in enumerate(f, start=1):
+            if linia.startswith(date):
+                linenum=nr_linii
+        if ndaysD==1200:
+            ndaysD=linenum-1
+        data = pd.read_csv("Stocks/" + ticker + ".us.csv", sep=',', header=0, encoding='utf-8', nrows=ndaysD, skiprows=range(1, linenum-1 - ndaysD))
+        data['Date'] = pd.to_datetime(data['Date'])
+        sourceData = ColumnDataSource(data)
+
+        incData = data.Close > data.Open
+        decData = data.Open > data.Close
+        w = 12 * 60 * 60 * 1000  # half day in ms
+        # Tworzenie wykresu świecowego
+        pData = figure(x_axis_type='datetime', title=ticker, width=800, height=400, sizing_mode="fixed", tools="")
+        pData.segment(x0='Date', y0='High', x1='Date', y1='Low', source=sourceData, color="black")
+        pData.vbar(data.Date[incData], w, data.Open[incData], data.Close[incData], fill_color="green", line_color="black")
+        pData.vbar(data.Date[decData], w, data.Open[decData], data.Close[decData], fill_color="red", line_color="black")
+        pData.toolbar.logo = None
+        pData.border_fill_color = None
+        pData.title.text_font_size = '16pt'
+        pData.xaxis.formatter = DatetimeTickFormatter(
+            days=["%d/%m/%Y"],
+            months=["%d/%m/%Y"],
+            years=["%d/%m/%Y"], )
+
+        scriptD, divD = components(pData)
+
     return render(request, 'analysis.html',
-                  {'today': today, 'day': dayName, 'month': monthName, 'divN': divN, 'scriptN': scriptN, 'divS': divS, 'scriptS': scriptS})
+                  {'today': today, 'day': dayName, 'month': monthName, 'divN': divN, 'scriptN': scriptN, 'divS': divS,
+                   'scriptS': scriptS, 'divD': divD, 'scriptD': scriptD})
+
+
+def portfolio(request):
+    todayObj = TodayDate.objects.all().first()
+    today = todayObj.date
+    dayName = today.strftime("%A")
+    monthName = today.strftime("%B")
+    # if request.method == 'POST':
+    #     a = 0
+    # else:
+    #     ticker = Stock.objects.all()
+    #     output = []
+    #     labels = []
+    #     data = []
+    #     for ticker_item in ticker:
+
+    return render(request, 'portfolio.html', {'today': today, 'day': dayName, 'month': monthName})
+
+def dopasowania(request):
+    wprowadzony_tekst = request.GET.get('q', '').lower()
+    dopasowania_list = []
+    f = open("Stocks/tickers.txt", 'r')
+    linie = f.readlines()
+    if linie:
+        for linia in linie:
+            dopasowania_list.append(linia.strip())
+
+
+    dopasowania_list = [dopasowanie for dopasowanie in dopasowania_list if wprowadzony_tekst in dopasowanie.lower()]
+
+    return JsonResponse(dopasowania_list, safe=False)

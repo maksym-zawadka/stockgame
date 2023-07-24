@@ -1,35 +1,91 @@
 {% extends 'base.html' %}
 {% block content %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <div class="container"
+         style="display: flex; flex-wrap: wrap; flex-direction: column; justify-content: center; width: 90vw; align-content: center">
         <h2>Today is: {{ day }}, {{ today.day }} {{ month }} {{ today.year }}</h2>
-    <div style="display: flex; flex-direction: row; justify-content: space-between; margin-top: 30px" >
-        <div style="order: 1">
-            {{ divN | safe }}
-            {{ scriptN | safe }}
+        <div style="display: flex; flex-direction: row; justify-content: space-between; margin-top: 30px">
+            <div style="order: 1">
+                {{ divN | safe }}
+                {{ scriptN | safe }}
 
-            <form method="post" name="timeInterval"> {% csrf_token %}
-                <span>Range: </span>
-                <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="1m">1m</button>
-                <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="3m">3m</button>
-                <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="6m">6m</button>
-                <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="1y">1y</button>
-                <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="5y">5y</button>
+                <form method="post" name="timeInterval"> {% csrf_token %}
+                    <span>Range: </span>
+                    <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="1m">1m</button>
+                    <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="3m">3m</button>
+                    <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="6m">6m</button>
+                    <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="1y">1y</button>
+                    <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="5y">5y</button>
 
-            </form>
+                </form>
+            </div>
+            <br>
+            <div style="order: 1">
+                {{ divS | safe }}
+                {{ scriptS | safe }}
+
+                <form method="post" name="timeInterval"> {% csrf_token %}
+                    <span>Range: </span>
+                    <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="1m">1m</button>
+                    <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="3m">3m</button>
+                    <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="6m">6m</button>
+                    <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="1y">1y</button>
+                    <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="5y">5y</button>
+
+                </form>
+            </div>
         </div>
-        <br>
+        <h5 style="margin-top: 40px; ">Search for stock:</h5>
+        <form class="d-flex" method="POST" name="searchStock">
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+            {% csrf_token %}
+            <input class="form-control me-2" id="wprowadzonyTekst" list="dopasowaniaList" type="text"
+                   placeholder="enter ticker eg. msft" aria-label="Add Stock" name="ticker" autocomplete="off"
+                   style="width: 15%">
+            <datalist id="dopasowaniaList">
+            </datalist>
+
+            <script>
+                $(document).ready(function () {
+                    $('#wprowadzonyTekst').on('input', function () {
+                        var wprowadzonyTekst = $(this).val();
+                        $.ajax({
+                            url: '/dopasowania/',
+                            data: {'q': wprowadzonyTekst},
+                            dataType: 'json',
+                            success: function (data) {
+                                var datalist = $('#dopasowaniaList');
+                                datalist.empty();
+
+                                data.forEach(function (dopasowanie) {
+                                    datalist.append('<option value="' + dopasowanie + '">');
+                                });
+                            }
+                        });
+                    });
+                });
+            </script>
+            <button class="btn btn-outline-success" type="submit" name="search_button">Search</button>
+        </form>
         <div style="order: 1">
-            {{ divS | safe }}
-            {{ scriptS | safe }}
+            {{ divD | safe }}
+            {{ scriptD | safe }}
+            {% if divD != "" %}
+                    <form method="post" name="timeInterval"> {% csrf_token %}
+                    <span>Range: </span>
+                    <button type="submit" class="btn btn-link btn-sm" name="saveTimeD" value="1m">1m</button>
+                    <button type="submit" class="btn btn-link btn-sm" name="saveTimeD" value="3m">3m</button>
+                    <button type="submit" class="btn btn-link btn-sm" name="saveTimeD" value="6m">6m</button>
+                    <button type="submit" class="btn btn-link btn-sm" name="saveTimeD" value="1y">1y</button>
+                    <button type="submit" class="btn btn-link btn-sm" name="saveTimeD" value="max">max.</button>
 
-            <form method="post" name="timeInterval"> {% csrf_token %}
-                <span>Range: </span>
-                <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="1m">1m</button>
-                <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="3m">3m</button>
-                <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="6m">6m</button>
-                <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="1y">1y</button>
-                <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="5y">5y</button>
-
-            </form>
+                </form>
+            {% endif %}
         </div>
+
+
     </div>
 {% endblock %}
