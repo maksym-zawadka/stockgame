@@ -20,7 +20,7 @@ def analysis(request):
     daysInGame = todayObj.daysInGame
     defaultndays = 92
     defaultndaysSP = 63
-    ndaysD=63
+    defaultndaysD=63
     # pobranie zakresu i zachowanie w sesji
     if request.method == 'POST':
         buttonNDX = request.POST.get('saveTimeN')
@@ -58,14 +58,19 @@ def analysis(request):
         buttonD = request.POST.get('saveTimeD')
         if buttonD == "1m":
             ndaysD= 20
+            request.session['daysD'] = ndaysD
         elif buttonD == "3m":
             ndaysD = 63
+            request.session['daysD'] = ndaysD
         elif buttonD == "6m":
             ndaysD = 120
+            request.session['daysD'] = ndaysD
         elif buttonD == "1y":
             ndaysD = 240
+            request.session['daysD'] = ndaysD
         elif buttonD == "max":
             ndaysD = 1200
+            request.session['daysD'] = ndaysD
         if 'search_button' in request.POST:
              request.session['ticker']= request.POST.get('ticker')
 
@@ -80,6 +85,10 @@ def analysis(request):
     ndaysSP = request.session.get('daysSP')
     if ndaysSP is None:
         ndaysSP = defaultndaysSP
+
+    ndaysD = request.session.get('daysD')
+    if ndaysD is None:
+        ndaysD = defaultndaysD
     # NASDAQ 100
     df = pd.read_csv("Stocks/ndx.csv", sep=';', header=0, encoding='utf-8', nrows=ndays,
                      skiprows=range(1, 1828 + daysInGame - ndays))
