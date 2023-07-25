@@ -4,7 +4,7 @@
     <div class="container"
          style="display: flex; flex-wrap: wrap; flex-direction: column; justify-content: center; width: 90vw; align-content: center">
         <h2>Today is: {{ day }}, {{ today.day }} {{ month }} {{ today.year }}</h2>
-        <div style="display: flex; flex-direction: row; justify-content: space-between; margin-top: 30px">
+        <div style="display: flex; flex-direction: row; justify-content: center; margin-top: 30px; ">
             <div style="order: 1">
                 {{ divN | safe }}
                 {{ scriptN | safe }}
@@ -35,8 +35,9 @@
                 </form>
             </div>
         </div>
-        <h5 style="margin-top: 40px; ">Search for stock:</h5>
-        <form class="d-flex" method="POST" name="searchStock">
+        <h3 style="margin-top: 40px;">Advanced analysis</h3>
+        <h5 style="margin-top: 20px">Search for stock:</h5>
+        <form class="d-flex" method="POST" name="searchStock" style="margin-bottom: 30px">
 
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -44,7 +45,7 @@
             {% csrf_token %}
             <input class="form-control me-2" id="wprowadzonyTekst" list="dopasowaniaList" type="text"
                    placeholder="enter ticker eg. msft" aria-label="Add Stock" name="ticker" autocomplete="off"
-                   style="width: 15%">
+                   style="width: 15%; ">
             <datalist id="dopasowaniaList">
             </datalist>
 
@@ -70,17 +71,55 @@
             </script>
             <button class="btn btn-outline-success" type="submit" name="search_button">Search</button>
         </form>
-        <div style="order: 1">
-            {{ divD | safe }}
+        <div style="order: 1; display: flex; justify-content: center; flex-wrap: wrap;">
+            <div class="aa">
+                {{ divD | safe }}
+            </div>
             {{ scriptD | safe }}
             {% if divD != "" %}
-                    <form method="post" name="timeInterval"> {% csrf_token %}
+                <form method="post" name="timeInterval" style="margin-top: 50px"> {% csrf_token %}
                     <span>Range: </span>
                     <button type="submit" class="btn btn-link btn-sm" name="saveTimeD" value="1m">1m</button>
                     <button type="submit" class="btn btn-link btn-sm" name="saveTimeD" value="3m">3m</button>
                     <button type="submit" class="btn btn-link btn-sm" name="saveTimeD" value="6m">6m</button>
                     <button type="submit" class="btn btn-link btn-sm" name="saveTimeD" value="1y">1y</button>
                     <button type="submit" class="btn btn-link btn-sm" name="saveTimeD" value="max">max.</button>
+                    <br/><span style="font-size: 18px">Indicators </span>
+                <br/>
+                    <input type="checkbox" name="MACD">
+                    <span> MACD</span>
+                    <br/><span>SMA:</span>
+                    <br/>
+                    <input type="checkbox" name="SMA" value="10">
+                    <span>SMA10</span>
+                    <br/>
+                    <input type="checkbox" name="SMA" value="20">
+                    <span>SMA20</span>
+                    <br/>
+                    <input type="checkbox" name="SMA" value="50">
+                    <span>SMA50</span>
+                    <br/>
+                    <input type="checkbox" name="SMA" value="100">
+                    <span>SMA100</span>
+                    <br/>
+                    <input type="checkbox" name="SMA" value="200">
+                    <span>SMA200</span>
+                    <br/><span>EMA:</span>
+                    <br/>
+                    <input type="checkbox" name="EMA" value="10">
+                    <span>EMA10</span>
+                    <br/>
+                    <input type="checkbox" name="EMA" value="20">
+                    <span>EMA20</span>
+                    <br/>
+                    <input type="checkbox" name="EMA" value="50">
+                    <span>EMA50</span>
+                    <br/>
+                    <input type="checkbox" name="EMA" value="100">
+                    <span>EMA100</span>
+                    <br/>
+                    <input type="checkbox" name="EMA" value="200">
+                    <span>EMA200</span>
 
                 </form>
             {% endif %}

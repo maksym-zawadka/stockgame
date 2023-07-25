@@ -1,3 +1,4 @@
+import ta.trend
 from django.shortcuts import render
 from .models import TodayDate, Stock, Money
 import pandas as pd
@@ -6,6 +7,9 @@ from bokeh.models import ColumnDataSource, DatetimeTickFormatter
 from bokeh.embed import components
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET
+from ta import add_all_ta_features
+from ta.utils import dropna
+
 
 def home(request):
     return render(request, 'home.html')
@@ -18,36 +22,36 @@ def analysis(request):
     dayName = today.strftime("%A")
     monthName = today.strftime("%B")
     daysInGame = todayObj.daysInGame
-    defaultndays = 92
+    defaultndays = 63
     defaultndaysSP = 63
     defaultndaysD=63
     # pobranie zakresu i zachowanie w sesji
     if request.method == 'POST':
         buttonNDX = request.POST.get('saveTimeN')
         if buttonNDX == "1m":
-            ndays = 30
+            ndays = 21
             request.session['daysNDX'] = ndays
         elif buttonNDX == "3m":
-            ndays = 92
+            ndays = 63
             request.session['daysNDX'] = ndays
         elif buttonNDX == "6m":
-            ndays = 183
+            ndays = 126
             request.session['daysNDX'] = ndays
         elif buttonNDX == "1y":
-            ndays = 365
+            ndays = 240
             request.session['daysNDX'] = ndays
         elif buttonNDX == "5y":
-            ndays = 1825
+            ndays = 1200
             request.session['daysNDX'] = ndays
         buttonSP = request.POST.get('saveTimeS')
         if buttonSP == "1m":
-            ndaysSP = 20
+            ndaysSP = 21
             request.session['daysSP'] = ndaysSP
         elif buttonSP == "3m":
             ndaysSP = 63
             request.session['daysSP'] = ndaysSP
         elif buttonSP == "6m":
-            ndaysSP = 120
+            ndaysSP = 126
             request.session['daysSP'] = ndaysSP
         elif buttonSP == "1y":
             ndaysSP = 240
@@ -57,7 +61,7 @@ def analysis(request):
             request.session['daysSP'] = ndaysSP
         buttonD = request.POST.get('saveTimeD')
         if buttonD == "1m":
-            ndaysD= 20
+            ndaysD= 21
             request.session['daysD'] = ndaysD
         elif buttonD == "3m":
             ndaysD = 63
@@ -90,9 +94,12 @@ def analysis(request):
     if ndaysD is None:
         ndaysD = defaultndaysD
     # NASDAQ 100
-    df = pd.read_csv("Stocks/ndx.csv", sep=';', header=0, encoding='utf-8', nrows=ndays,
-                     skiprows=range(1, 1828 + daysInGame - ndays))
-
+    df = pd.read_csv("Stocks/ndx.us.csv", sep=',', header=0, encoding='utf-8', nrows=1258+daysInGame)
+    ndxEMA=ta.trend.EMAIndicator(close=df['Close'], window=30, fillna=False)
+    ndxSMA=ta.trend.SMAIndicator(close=df['Close'], window=30, fillna=False)
+    df['EMA']=ndxEMA.ema_indicator()
+    df['SMA']=ndxSMA.sma_indicator()
+    df = df.drop(df.index[0:1258+daysInGame - ndays])
     df['Date'] = pd.to_datetime(df['Date'])
     source = ColumnDataSource(df)
 
@@ -104,6 +111,8 @@ def analysis(request):
     p.segment(x0='Date', y0='High', x1='Date', y1='Low', source=source, color="black")
     p.vbar(df.Date[inc], w, df.Open[inc], df.Close[inc], fill_color="green", line_color="black")
     p.vbar(df.Date[dec], w, df.Open[dec], df.Close[dec], fill_color="red", line_color="black")
+    p.line(df.Date, df.EMA, line_color="orange", line_width=1.5)
+    p.line(df.Date, df.SMA, line_color="purple", line_width=1.5)
     p.toolbar.logo = None
     p.border_fill_color = None
     p.title.text_font_size = '16pt'
@@ -116,7 +125,7 @@ def analysis(request):
 
     # SP500
     # 1258
-    dfS = pd.read_csv("Stocks/spx.csv", sep=';', header=0, encoding='utf-8', nrows=ndaysSP,
+    dfS = pd.read_csv("Stocks/spx.us.csv", sep=',', header=0, encoding='utf-8', nrows=ndaysSP,
                       skiprows=range(1, 1259 + daysInGame - ndaysSP))
 
     dfS['Date'] = pd.to_datetime(dfS['Date'])
@@ -148,6 +157,14 @@ def analysis(request):
     if ticker is None:
         ticker = ""
     if ticker:
+        smaPeriod=0
+        emaPeriod=0
+
+        buttonSMA = request.POST.get('SMA')
+        smaPeriod=int(buttonSMA)
+        buttonEMA = request.POST.get('EMA')
+        emaPeriod=int(buttonEMA)
+        
         #szukanie ktora z kolei jest linia z dzisiejsza data
         date=today.strftime("%Y-%m-%d")
         linenum=0
@@ -165,7 +182,7 @@ def analysis(request):
         decData = data.Open > data.Close
         w = 12 * 60 * 60 * 1000  # half day in ms
         # Tworzenie wykresu świecowego
-        pData = figure(x_axis_type='datetime', title=ticker, width=800, height=400, sizing_mode="fixed", tools="")
+        pData = figure(x_axis_type='datetime', title=ticker, width=1200, height=600, sizing_mode="fixed", tools="")
         pData.segment(x0='Date', y0='High', x1='Date', y1='Low', source=sourceData, color="black")
         pData.vbar(data.Date[incData], w, data.Open[incData], data.Close[incData], fill_color="green", line_color="black")
         pData.vbar(data.Date[decData], w, data.Open[decData], data.Close[decData], fill_color="red", line_color="black")
