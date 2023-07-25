@@ -157,14 +157,18 @@ def analysis(request):
     if ticker is None:
         ticker = ""
     if ticker:
-        smaPeriod=0
-        emaPeriod=0
-
         buttonSMA = request.POST.get('SMA')
-        smaPeriod=int(buttonSMA)
+        if buttonSMA is None:
+            smaPeriod=0
+        else:
+            smaPeriod=int(buttonSMA)
+
         buttonEMA = request.POST.get('EMA')
-        emaPeriod=int(buttonEMA)
-        
+        if buttonEMA is None:
+            emaPeriod=0
+        else:
+            emaPeriod=int(buttonEMA)
+
         #szukanie ktora z kolei jest linia z dzisiejsza data
         date=today.strftime("%Y-%m-%d")
         linenum=0
@@ -174,7 +178,14 @@ def analysis(request):
                 linenum=nr_linii
         if ndaysD==1200:
             ndaysD=linenum-1
-        data = pd.read_csv("Stocks/" + ticker + ".us.csv", sep=',', header=0, encoding='utf-8', nrows=ndaysD, skiprows=range(1, linenum-1 - ndaysD))
+        data = pd.read_csv("Stocks/" + ticker + ".us.csv", sep=',', header=0, encoding='utf-8', nrows=linenum-1+daysInGame)
+        if emaPeriod>0:
+            dEMA = ta.trend.EMAIndicator(close=data['Close'], window=emaPeriod, fillna=False)
+            data['EMA'] = dEMA.ema_indicator()
+        if smaPeriod >0:
+            dSMA = ta.trend.SMAIndicator(close=data['Close'], window=smaPeriod, fillna=False)
+            data['SMA'] = dSMA.sma_indicator()
+        data = data.drop(data.index[0:linenum-1 + daysInGame - ndaysD])
         data['Date'] = pd.to_datetime(data['Date'])
         sourceData = ColumnDataSource(data)
 
@@ -186,6 +197,10 @@ def analysis(request):
         pData.segment(x0='Date', y0='High', x1='Date', y1='Low', source=sourceData, color="black")
         pData.vbar(data.Date[incData], w, data.Open[incData], data.Close[incData], fill_color="green", line_color="black")
         pData.vbar(data.Date[decData], w, data.Open[decData], data.Close[decData], fill_color="red", line_color="black")
+        if emaPeriod>0:
+            pData.line(data.Date, data.EMA, line_color="orange", line_width=1.5)
+        if smaPeriod>0:
+            pData.line(data.Date, data.SMA, line_color="purple", line_width=1.5)
         pData.toolbar.logo = None
         pData.border_fill_color = None
         pData.title.text_font_size = '16pt'

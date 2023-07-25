@@ -77,7 +77,7 @@
             </div>
             {{ scriptD | safe }}
             {% if divD != "" %}
-                <form method="post" name="timeInterval" style="margin-top: 50px"> {% csrf_token %}
+                <form method="post" id="indicators"name="timeInterval" style="margin-top: 50px"> {% csrf_token %}
                     <span>Range: </span>
                     <button type="submit" class="btn btn-link btn-sm" name="saveTimeD" value="1m">1m</button>
                     <button type="submit" class="btn btn-link btn-sm" name="saveTimeD" value="3m">3m</button>
@@ -85,7 +85,7 @@
                     <button type="submit" class="btn btn-link btn-sm" name="saveTimeD" value="1y">1y</button>
                     <button type="submit" class="btn btn-link btn-sm" name="saveTimeD" value="max">max.</button>
                     <br/><span style="font-size: 18px">Indicators </span>
-                <br/>
+                    <br/>
                     <input type="checkbox" name="MACD">
                     <span> MACD</span>
                     <br/><span>SMA:</span>
@@ -120,11 +120,23 @@
                     <br/>
                     <input type="checkbox" name="EMA" value="200">
                     <span>EMA200</span>
-
                 </form>
             {% endif %}
         </div>
 
+                <script>
+                        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
+                        checkboxes.forEach(checkbox => {
+                            checkbox.addEventListener('change', function () {
+                                // Sprawdź, który checkbox został zmieniony
+
+                                // Wyślij formularz
+                                document.getElementById('indicators').submit();
+                            });
+                        });
+
+
+                    </script>
     </div>
 {% endblock %}
