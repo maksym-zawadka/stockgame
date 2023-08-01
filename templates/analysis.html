@@ -69,7 +69,7 @@
                     });
                 });
             </script>
-            <button class="btn btn-outline-success" type="submit" name="search_button">Search</button>
+            <button class="btn btn-outline-success" type="submit" id="search" name="search_button">Search</button>
         </form>
         <div style="order: 1; display: flex; justify-content: center; flex-wrap: wrap;">
             <div class="aa">
@@ -77,7 +77,7 @@
             </div>
             {{ scriptD | safe }}
             {% if divD != "" %}
-                <form method="post" id="indicators"name="timeInterval" style="margin-top: 50px"> {% csrf_token %}
+                <form method="post" id="indicators" name="timeInterval" style="margin-top: 50px"> {% csrf_token %}
                     <span>Range: </span>
                     <button type="submit" class="btn btn-link btn-sm" name="saveTimeD" value="1m">1m</button>
                     <button type="submit" class="btn btn-link btn-sm" name="saveTimeD" value="3m">3m</button>
@@ -86,57 +86,172 @@
                     <button type="submit" class="btn btn-link btn-sm" name="saveTimeD" value="max">max.</button>
                     <br/><span style="font-size: 18px">Indicators </span>
                     <br/>
-                    <input type="checkbox" name="MACD">
-                    <span> MACD</span>
+                    <input type="checkbox" id="macd" name="MACD">
+                    <label for="macd"> MACD</label>
                     <br/><span>SMA:</span>
                     <br/>
-                    <input type="checkbox" name="SMA" value="10">
-                    <span>SMA10</span>
+                    <input type="checkbox" id="sma10" name="SMA10" value="10">
+                    <label for="sma10"> SMA10</label>
                     <br/>
-                    <input type="checkbox" name="SMA" value="20">
-                    <span>SMA20</span>
+                    <input type="checkbox" id="sma20" name="SMA20" value="20">
+                    <label for="sma20">SMA20</label>
                     <br/>
-                    <input type="checkbox" name="SMA" value="50">
-                    <span>SMA50</span>
+                    <input type="checkbox" id="sma50" name="SMA50" value="50">
+                    <label for="sma50">SMA50</label>
                     <br/>
-                    <input type="checkbox" name="SMA" value="100">
-                    <span>SMA100</span>
+                    <input type="checkbox" id="sma100" name="SMA100" value="100">
+                    <label for="sma100">SMA100</label>
                     <br/>
-                    <input type="checkbox" name="SMA" value="200">
-                    <span>SMA200</span>
+                    <input type="checkbox" id="sma200" name="SMA200" value="200">
+                    <label for="sma200">SMA200</label>
                     <br/><span>EMA:</span>
                     <br/>
-                    <input type="checkbox" name="EMA" value="10">
-                    <span>EMA10</span>
+                    <input type="checkbox" id="ema10" name="EMA10" value="10">
+                    <label for="ema10">EMA10</label>
                     <br/>
-                    <input type="checkbox" name="EMA" value="20">
-                    <span>EMA20</span>
+                    <input type="checkbox" id="ema20" name="EMA20" value="20">
+                    <label for="ema20">EMA20</label>
                     <br/>
-                    <input type="checkbox" name="EMA" value="50">
-                    <span>EMA50</span>
+                    <input type="checkbox" id="ema50" name="EMA50" value="50">
+                    <label for="ema50">EMA50</label>
                     <br/>
-                    <input type="checkbox" name="EMA" value="100">
-                    <span>EMA100</span>
+                    <input type="checkbox" id="ema100" name="EMA100" value="100">
+                    <label for="ema100">EMA100</label>
                     <br/>
-                    <input type="checkbox" name="EMA" value="200">
-                    <span>EMA200</span>
+                    <input type="checkbox" id="ema200" name="EMA200" value="200">
+                    <label for="ema200">EMA200</label>
                 </form>
             {% endif %}
         </div>
 
-                <script>
-                        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        <script>
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
-                        checkboxes.forEach(checkbox => {
-                            checkbox.addEventListener('change', function () {
-                                // Sprawdź, który checkbox został zmieniony
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    // Sprawdź, który checkbox został zmieniony
 
-                                // Wyślij formularz
-                                document.getElementById('indicators').submit();
-                            });
-                        });
+                    // Wyślij formularz
+                    document.getElementById('indicators').submit();
+                });
+            });
+
+            //ZACHOWANIE STANU CHECKBOXOW
+            //SMA10
+            const sma10 = document.getElementById('sma10');
+            // Nasluchiwanie zmiany
+            sma10.addEventListener('change', function () {
+                // Zapisanie stanu checkboxa
+                localStorage.setItem('sma10state', this.checked);
+            });
+            // Przy wczytaniu strony odczytanie stanu checkboxa
+            if (localStorage.getItem('sma10state') !== null) {
+                sma10.checked = localStorage.getItem('sma10state') === 'true';
+            }
+            //SMA20
+            const sma20 = document.getElementById('sma20');
+            sma20.addEventListener('change', function () {
+                localStorage.setItem('sma20state', this.checked);
+            });
+            if (localStorage.getItem('sma20state') !== null) {
+                sma20.checked = localStorage.getItem('sma20state') === 'true';
+            }
+            //SMA50
+            const sma50 = document.getElementById('sma50');
+            sma50.addEventListener('change', function () {
+                localStorage.setItem('sma50state', this.checked);
+            });
+            if (localStorage.getItem('sma50state') !== null) {
+                sma50.checked = localStorage.getItem('sma50state') === 'true';
+            }
+            //SMA100
+            const sma100 = document.getElementById('sma100');
+            sma100.addEventListener('change', function () {
+                localStorage.setItem('sma100state', this.checked);
+            });
+            if (localStorage.getItem('sma100state') !== null) {
+                sma100.checked = localStorage.getItem('sma100state') === 'true';
+            }
+            //SMA200
+            const sma200 = document.getElementById('sma200');
+            sma200.addEventListener('change', function () {
+                localStorage.setItem('sma200state', this.checked);
+            });
+            if (localStorage.getItem('sma200state') !== null) {
+                sma200.checked = localStorage.getItem('sma200state') === 'true';
+            }
+
+            //ema10
+            const ema10 = document.getElementById('ema10');
+            ema10.addEventListener('change', function () {
+                localStorage.setItem('ema10state', this.checked);
+            });
+            if (localStorage.getItem('ema10state') !== null) {
+                ema10.checked = localStorage.getItem('ema10state') === 'true';
+            }
+            //ema20
+            const ema20 = document.getElementById('ema20');
+            ema20.addEventListener('change', function () {
+                localStorage.setItem('ema20state', this.checked);
+            });
+            if (localStorage.getItem('ema20state') !== null) {
+                ema20.checked = localStorage.getItem('ema20state') === 'true';
+            }
+            //ema50
+            const ema50 = document.getElementById('ema50');
+            ema50.addEventListener('change', function () {
+                localStorage.setItem('ema50state', this.checked);
+            });
+            if (localStorage.getItem('ema50state') !== null) {
+                ema50.checked = localStorage.getItem('ema50state') === 'true';
+            }
+            //ema100
+            const ema100 = document.getElementById('ema100');
+            ema100.addEventListener('change', function () {
+                localStorage.setItem('ema100state', this.checked);
+            });
+            if (localStorage.getItem('ema100state') !== null) {
+                ema100.checked = localStorage.getItem('ema100state') === 'true';
+            }
+            //ema200
+            const ema200 = document.getElementById('ema200');
+            ema200.addEventListener('change', function () {
+                localStorage.setItem('ema200state', this.checked);
+            });
+            if (localStorage.getItem('ema200state') !== null) {
+                ema200.checked = localStorage.getItem('ema200state') === 'true';
+            }
 
 
-                    </script>
+            //KASOWANIE CHECKBOXOW PO ZMIANIE TICKERA
+            const searchButton = document.getElementById('search');
+            function uncheckAndSave(){
+                sma10.checked = false;
+                localStorage.setItem('sma10state', sma10.checked);
+                sma20.checked = false;
+                localStorage.setItem('sma20state', sma20.checked);
+                sma50.checked = false;
+                localStorage.setItem('sma50state', sma50.checked);
+                sma100.checked = false;
+                localStorage.setItem('sma100state', sma100.checked);
+                sma200.checked = false;
+                localStorage.setItem('sma200state', sma200.checked);
+                ema10.checked = false;
+                localStorage.setItem('ema10state', ema10.checked);
+                ema20.checked = false;
+                localStorage.setItem('ema20state', ema20.checked);
+                ema50.checked = false;
+                localStorage.setItem('ema50state', ema50.checked);
+                ema100.checked = false;
+                localStorage.setItem('ema100state', ema100.checked);
+                ema200.checked = false;
+                localStorage.setItem('ema200state', ema200.checked);
+            }
+
+            searchButton.addEventListener('click', function () {
+                // Gdy klikniety przycisk, odznacz checkboxy
+                uncheckAndSave()
+            });
+        </script>
     </div>
 {% endblock %}
