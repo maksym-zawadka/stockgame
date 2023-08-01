@@ -24,7 +24,7 @@
                 {{ divS | safe }}
                 {{ scriptS | safe }}
 
-                <form method="post" name="timeInterval"> {% csrf_token %}
+                <form method="post" id="timeSP" name="timeInterval"> {% csrf_token %}
                     <span>Range: </span>
                     <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="1m">1m</button>
                     <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="3m">3m</button>
@@ -87,8 +87,19 @@
                     <br/><span style="font-size: 18px">Indicators </span>
                     <br/>
                     <input type="checkbox" id="macd" name="MACD">
-                    <label for="macd"> MACD</label>
-                    <br/><span>SMA:</span>
+                    <label for="macd" class="macd"> MACD</label>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-info-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                    </svg>
+                    <br/>
+                    <span>SMA:</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-info-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                    </svg>
                     <br/>
                     <input type="checkbox" id="sma10" name="SMA10" value="10">
                     <label for="sma10"> SMA10</label>
@@ -105,6 +116,11 @@
                     <input type="checkbox" id="sma200" name="SMA200" value="200">
                     <label for="sma200">SMA200</label>
                     <br/><span>EMA:</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-info-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                    </svg>
                     <br/>
                     <input type="checkbox" id="ema10" name="EMA10" value="10">
                     <label for="ema10">EMA10</label>
@@ -132,6 +148,7 @@
                     // Sprawdź, który checkbox został zmieniony
 
                     // Wyślij formularz
+
                     document.getElementById('indicators').submit();
                 });
             });
@@ -225,7 +242,8 @@
 
             //KASOWANIE CHECKBOXOW PO ZMIANIE TICKERA
             const searchButton = document.getElementById('search');
-            function uncheckAndSave(){
+
+            function uncheckAndSave() {
                 sma10.checked = false;
                 localStorage.setItem('sma10state', sma10.checked);
                 sma20.checked = false;
