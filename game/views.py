@@ -3,7 +3,7 @@ from django.shortcuts import render
 from .models import TodayDate, Stock, Money
 import pandas as pd
 from bokeh.plotting import figure
-from bokeh.models import ColumnDataSource, DatetimeTickFormatter
+from bokeh.models import ColumnDataSource, DatetimeTickFormatter, HoverTool
 from bokeh.embed import components
 from django.http import JsonResponse
 
@@ -103,6 +103,7 @@ def analysis(request):
     inc = df.Close > df.Open
     dec = df.Open > df.Close
     w = 12 * 60 * 60 * 1000  # half day in ms
+
     # Tworzenie wykresu świecowego
     p = figure(x_axis_type='datetime', title='Nasdaq 100 (^NDX)', width=800, height=400, sizing_mode="fixed", tools="")
     p.segment(x0='Date', y0='High', x1='Date', y1='Low', source=source, color="black")
@@ -148,7 +149,8 @@ def analysis(request):
 
     divD = ""
     scriptD = ""
-
+    scriptMACD = ""
+    divMACD = ""
     # ADVANCED SEARCH
     ticker = request.session.get('ticker')
     if ticker is None:
@@ -215,6 +217,12 @@ def analysis(request):
             request.session['ema200'] = 0
         else:
             request.session['ema200'] = 200
+        # MACD
+        buttonMACD = request.POST.get('MACD')
+        if buttonMACD is None:
+            request.session['macd'] = 0
+        else:
+            request.session['macd'] = 1
 
         # szukanie ktora z kolei jest linia z dzisiejsza data
         date = today.strftime("%Y-%m-%d")
@@ -263,11 +271,18 @@ def analysis(request):
             dEMA = ta.trend.EMAIndicator(close=data['Close'], window=200, fillna=False)
             data['EMA200'] = dEMA.ema_indicator()
 
+        # DODAWANIE KOLUMNY MACD
+        if request.session.get('macd') == 1:
+            dMACD = ta.trend.MACD(close=data['Close'], window_slow=26, window_fast=12, window_sign=9, fillna=False)
+            data['MACD'] = dMACD.macd()
+            data['signalMACD'] = dMACD.macd_signal()
+            data['histogramMACD'] = dMACD.macd_diff()
+
         # usuniecie danych spoza wyznaczonego  zakresu
         data = data.drop(data.index[0:linenum - 1 + daysInGame - ndaysD])
         data['Date'] = pd.to_datetime(data['Date'])
         sourceData = ColumnDataSource(data)
-
+        sourceDataMACD = ColumnDataSource(data)
         incData = data.Close > data.Open
         decData = data.Open > data.Close
         w = 12 * 60 * 60 * 1000  # half day in ms
@@ -319,9 +334,32 @@ def analysis(request):
 
         scriptD, divD = components(pData)
 
+        # MACD CHART
+        if request.session.get('macd') == 1:
+            macdChart = figure(x_axis_type='datetime', width=1200, height=300, sizing_mode="fixed",
+                               tools="")
+            macdChart.segment(x0='Date', source=sourceDataMACD)
+            macdChart.line(data.Date, data.MACD, line_color="#C451EC", line_width=2.0,
+                            legend_label="MACD")
+            macdChart.line(data.Date, data.signalMACD, line_color="red", line_width=2.0,
+                            legend_label="MACD signal")
+            macdChart.vbar(data.Date, w, top=data.histogramMACD)
+
+            macdChart.toolbar.logo = None
+            macdChart.border_fill_color = None
+            macdChart.title.text_font_size = '16pt'
+            macdChart.xaxis.formatter = DatetimeTickFormatter(
+                days=["%d/%m/%Y"],
+                months=["%d/%m/%Y"],
+                years=["%d/%m/%Y"], )
+            macdChart.legend.location = "top_left"
+
+            scriptMACD, divMACD = components(macdChart)
+
     return render(request, 'analysis.html',
                   {'today': today, 'day': dayName, 'month': monthName, 'divN': divN, 'scriptN': scriptN, 'divS': divS,
-                   'scriptS': scriptS, 'divD': divD, 'scriptD': scriptD, 'ticker': ticker})
+                   'scriptS': scriptS, 'divD': divD, 'scriptD': scriptD, 'scriptMACD': scriptMACD, 'divMACD': divMACD,
+                   'ticker': ticker})
 
 
 def portfolio(request):
@@ -340,7 +378,8 @@ def portfolio(request):
 
     return render(request, 'portfolio.html', {'today': today, 'day': dayName, 'month': monthName})
 
-
+def education(request):
+    return render(request, 'education.html')
 def dopasowania(request):
     wprowadzony_tekst = request.GET.get('q', '').lower()
     dopasowania_list = []
