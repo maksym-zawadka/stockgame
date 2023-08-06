@@ -6,7 +6,7 @@ from bokeh.plotting import figure
 from bokeh.models import ColumnDataSource, DatetimeTickFormatter, HoverTool
 from bokeh.embed import components
 from django.http import JsonResponse
-
+from django.contrib import messages
 
 def home(request):
     return render(request, 'home.html')
@@ -151,11 +151,17 @@ def analysis(request):
     scriptD = ""
     scriptMACD = ""
     divMACD = ""
+    #TICKER LIST
+    lines = []
+    with open("Stocks/tickers.txt", 'r') as file:
+        for line in file:
+            lines.append(line.strip())
+
     # ADVANCED SEARCH
     ticker = request.session.get('ticker')
     if ticker is None:
         ticker = ""
-    if ticker:
+    elif ticker in lines:
         # SMA10
         buttonSMA10 = request.POST.get('SMA10')
         if buttonSMA10 is None:
@@ -355,7 +361,9 @@ def analysis(request):
             macdChart.legend.location = "top_left"
 
             scriptMACD, divMACD = components(macdChart)
-
+    else:
+        messages.error(request, "Wrong ticker")
+        request.session['ticker']=None
     return render(request, 'analysis.html',
                   {'today': today, 'day': dayName, 'month': monthName, 'divN': divN, 'scriptN': scriptN, 'divS': divS,
                    'scriptS': scriptS, 'divD': divD, 'scriptD': scriptD, 'scriptMACD': scriptMACD, 'divMACD': divMACD,

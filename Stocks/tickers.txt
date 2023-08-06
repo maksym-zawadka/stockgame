@@ -398,7 +398,6 @@ tel
 ter
 tfx
 tgt
-tickers
 tjx
 tmo
 tmus
