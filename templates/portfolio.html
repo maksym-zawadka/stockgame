@@ -28,6 +28,15 @@
                 </tr>
                 </thead>
                 <tbody>
+
+                {% if not ticker %}
+                    <tr style="height: 41px">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% endif %}
                 {% if ticker %}
                     {% for list_item in output %}
                         <tr>
@@ -50,14 +59,36 @@
 
                 <form class="d-flex" method="POST" name="buy_form">
                     {% csrf_token %}
-                    <input class="form-control me-2" type="search" placeholder="Ticker" aria-label="Add Stock"
-                           name="buyticker"
+                    <input class="form-control me-2" type="text" placeholder="Ticker" aria-label="Add Stock"
+                           name="buyticker" id="wprowadzonyTekst" autocomplete="off" list="dopasowaniaList"
                            style="width: 30%">
                     <input class="form-control me-2" type="search" placeholder="Volume" aria-label="Add Stock"
                            name="buyvolume"
                            style="width: 30%">
                     <button class="btn btn-outline-success" type="submit" name="buy_button">Buy</button>
                 </form>
+                <datalist id="dopasowaniaList">
+                </datalist>
+                <script>
+                    $(document).ready(function () {
+                        $('#wprowadzonyTekst').on('input', function () {
+                            var wprowadzonyTekst = $(this).val();
+                            $.ajax({
+                                url: '/dopasowania/',
+                                data: {'q': wprowadzonyTekst},
+                                dataType: 'json',
+                                success: function (data) {
+                                    var datalist = $('#dopasowaniaList');
+                                    datalist.empty();
+
+                                    data.forEach(function (dopasowanie) {
+                                        datalist.append('<option value="' + dopasowanie + '">');
+                                    });
+                                }
+                            });
+                        });
+                    });
+                </script>
                 <br/>
                 <br/>
 
