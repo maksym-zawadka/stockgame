@@ -1,5 +1,6 @@
 import ta.trend
-from django.shortcuts import render
+import ta.volatility
+from django.shortcuts import render, redirect
 from .models import TodayDate, Stock, Money
 import pandas as pd
 from bokeh.plotting import figure
@@ -7,6 +8,7 @@ from bokeh.models import ColumnDataSource, DatetimeTickFormatter, HoverTool
 from bokeh.embed import components
 from django.http import JsonResponse
 from django.contrib import messages
+
 
 def home(request):
     return render(request, 'home.html')
@@ -151,7 +153,7 @@ def analysis(request):
     scriptD = ""
     scriptMACD = ""
     divMACD = ""
-    #TICKER LIST
+    # TICKER LIST
     lines = []
     with open("Stocks/tickers.txt", 'r') as file:
         for line in file:
@@ -229,7 +231,12 @@ def analysis(request):
             request.session['macd'] = 0
         else:
             request.session['macd'] = 1
-
+        # BOLLINGER
+        buttonBollinger = request.POST.get('BOLLINGER')
+        if buttonBollinger is None:
+            request.session['bollinger'] = 0
+        else:
+            request.session['bollinger'] = 1
         # szukanie ktora z kolei jest linia z dzisiejsza data
         date = today.strftime("%Y-%m-%d")
         linenum = 0
@@ -241,7 +248,7 @@ def analysis(request):
         if ndaysD == 1200:
             ndaysD = linenum - 1
         data = pd.read_csv("Stocks/" + ticker + ".us.csv", sep=',', header=0, encoding='utf-8',
-                           nrows=linenum - 1 + daysInGame)
+                           nrows=linenum - 1)
 
         # DODAWANIE KOLUMN Z SMA
         if request.session.get('sma10') != 0:
@@ -283,6 +290,13 @@ def analysis(request):
             data['MACD'] = dMACD.macd()
             data['signalMACD'] = dMACD.macd_signal()
             data['histogramMACD'] = dMACD.macd_diff()
+
+        # DODAWANIE KOLUMNY BOLLINGER
+        if request.session.get('bollinger') == 1:
+            dBOLLINGER = ta.volatility.BollingerBands(close=data['Close'], window=20, window_dev=2, fillna=False)
+            data['BOLLINGERHBAND'] = dBOLLINGER.bollinger_hband()
+            data['BOLLINGERLBAND'] = dBOLLINGER.bollinger_lband()
+            data['BOLLINGERMAVG'] = dBOLLINGER.bollinger_mavg()
 
         # usuniecie danych spoza wyznaczonego  zakresu
         data = data.drop(data.index[0:linenum - 1 + daysInGame - ndaysD])
@@ -326,6 +340,12 @@ def analysis(request):
         if request.session.get('ema200') != 0:
             pData.line(data.Date, data.EMA200, line_dash="dashed", line_color="#39FF14", line_width=2.0,
                        legend_label="EMA200")
+        # RYSOWANIE BOLLINGER
+        if request.session.get('bollinger') != 0:
+            pData.line(data.Date, data.BOLLINGERHBAND, line_color="#b2badb", line_width=2.0,
+                       legend_label="BB(20,2)")
+            pData.line(data.Date, data.BOLLINGERLBAND, line_color="#b2badb", line_width=2.0)
+            pData.line(data.Date, data.BOLLINGERMAVG, line_dash="dashed", line_color="#b2badb", line_width=2.0)
 
         pData.toolbar.logo = None
         pData.border_fill_color = None
@@ -346,9 +366,9 @@ def analysis(request):
                                tools="")
             macdChart.segment(x0='Date', source=sourceDataMACD)
             macdChart.line(data.Date, data.MACD, line_color="#C451EC", line_width=2.0,
-                            legend_label="MACD")
+                           legend_label="MACD")
             macdChart.line(data.Date, data.signalMACD, line_color="red", line_width=2.0,
-                            legend_label="MACD signal")
+                           legend_label="MACD signal")
             macdChart.vbar(data.Date, w, top=data.histogramMACD)
 
             macdChart.toolbar.logo = None
@@ -363,7 +383,7 @@ def analysis(request):
             scriptMACD, divMACD = components(macdChart)
     else:
         messages.error(request, "Wrong ticker")
-        request.session['ticker']=None
+        request.session['ticker'] = None
     return render(request, 'analysis.html',
                   {'today': today, 'day': dayName, 'month': monthName, 'divN': divN, 'scriptN': scriptN, 'divS': divS,
                    'scriptS': scriptS, 'divD': divD, 'scriptD': scriptD, 'scriptMACD': scriptMACD, 'divMACD': divMACD,
@@ -375,19 +395,155 @@ def portfolio(request):
     today = todayObj.date
     dayName = today.strftime("%A")
     monthName = today.strftime("%B")
-    # if request.method == 'POST':
-    #     a = 0
-    # else:
-    #     ticker = Stock.objects.all()
-    #     output = []
-    #     labels = []
-    #     data = []
-    #     for ticker_item in ticker:
+    money = Money.objects.all().first().cash
+    portfolio_value = 0
+    sharePrice = 0
 
-    return render(request, 'portfolio.html', {'today': today, 'day': dayName, 'month': monthName})
+    if request.method == 'POST':
+        # formularz zakupu
+        if 'buy_button' in request.POST:
+            ticker = request.POST.get('buyticker')
+            try:
+                vol = int(request.POST.get('buyvolume'))
+            except:
+                vol="Not a number"
+            with open("Stocks/tickers.txt", 'r') as plik:
+                content = plik.read()
+                if ticker in content and isinstance(vol,int):
+                    # szukanie ktora z kolei jest linia z dzisiejsza data
+                    date = today.strftime("%Y-%m-%d")
+                    linenum = 0
+                    f = open("Stocks/" + ticker + ".us.csv")
+                    for nr_linii, linia in enumerate(f, start=1):
+                        if linia.startswith(date):
+                            linenum = nr_linii
+                    linenum = linenum - 1  # wczorajsza data
+                    values=""
+                    with open("Stocks/" + ticker + ".us.csv") as f:
+                        for i, line in enumerate(f):
+                            if i == linenum:
+                                values=line.strip().split(',')
+                                sharePrice=float(values[4])
+                            elif i > linenum:
+                                break
+                    # szukanie czy w bazie sa juz dane akcje
+                    all_stock = Stock.objects.all()
+                    new_stock = True
+                    for t in all_stock:
+                        if t.ticker == ticker:
+                            new_stock = False
+                            break
+                    # sprawdzenie czy mamy wystarczajaco pieniedzy
+                    price = float(vol) * sharePrice
+                    if (price <= money):
+                        if new_stock:
+                            newStock = Stock(ticker=ticker, volume=vol)
+                            newStock.save()
+                        else:
+                            new_volume = Stock.objects.get(ticker=ticker).volume + vol
+                            Stock.objects.filter(ticker=ticker).update(volume=new_volume)
+                        newMoney=Money.objects.all().first()
+                        newMoney.cash=round((money - price),2)
+                        newMoney.save()
+                        messages.success(request, "Added successfully")
+                    else:
+                        messages.error(request, "Not enough funds")
+                    return redirect('portfolio')
+                else:
+                    messages.error(request, "Wrong values")
+                    return redirect('portfolio')
+        #formularz sprzedazy
+        else:
+            ticker = request.POST.get('sellticker')
+            try:
+                vol = int(request.POST.get('sellvolume'))
+            except:
+                vol = "Not a number"
+            with open("Stocks/tickers.txt", 'r') as plik:
+                content = plik.read()
+                if ticker in content and isinstance(vol, int):
+                    # szukanie ktora z kolei jest linia z dzisiejsza data
+                    date = today.strftime("%Y-%m-%d")
+                    linenum = 0
+                    f = open("Stocks/" + ticker + ".us.csv")
+                    for nr_linii, linia in enumerate(f, start=1):
+                        if linia.startswith(date):
+                            linenum = nr_linii
+                    linenum = linenum - 1  # wczorajsza data
+                    values = ""
+                    with open("Stocks/" + ticker + ".us.csv") as f:
+                        for i, line in enumerate(f):
+                            if i == linenum:
+                                values = line.strip().split(',')
+                                sharePrice = float(values[4])
+                            elif i > linenum:
+                                break
+                    all_stock = Stock.objects.all()
+                    new_stock = True
+                    for t in all_stock:
+                        if t.ticker == ticker:
+                            new_stock = False
+                            break
+                    if new_stock == True:
+                        messages.error(request, ("You do not own that shares "))
+                        return redirect('portfolio')
+                    else:
+                        # sprawdzenie czy mamy wystarczajaco sztuk
+                        stockvolume = Stock.objects.get(ticker=ticker).volume
+                        if vol > stockvolume:
+                            messages.error(request, ("You do not own that many shares"))
+                            return redirect('portfolio')
+                        else:
+                            cash = money + vol * sharePrice
+                            newMoney = Money.objects.all().first()
+                            newMoney.cash = round((cash), 2)
+                            newMoney.save()
+                            new_vol = stockvolume - vol
+                            Stock.objects.filter(ticker=ticker).update(volume=new_vol)
+                            messages.success(request, ("Sold"))
+                            if new_vol == 0:
+                                Stock.objects.filter(ticker=ticker).delete()
+                            return redirect('portfolio')
+                else:
+                    messages.error(request, ("Wrong values"))
+                    return redirect('portfolio')
+    else:
+        ticker = Stock.objects.all()
+        output = []
+        for ticker_item in ticker:
+            record = []
+
+            # szukanie ktora z kolei jest linia z dzisiejsza data
+            date = today.strftime("%Y-%m-%d")
+            linenum = 0
+            f = open("Stocks/" + ticker_item.ticker + ".us.csv")
+            for nr_linii, linia in enumerate(f, start=1):
+                if linia.startswith(date):
+                    linenum = nr_linii
+            linenum = linenum - 1  # wczorajsza data
+            values = ""
+            sharePrice=0
+            with open("Stocks/" + ticker_item.ticker + ".us.csv") as f:
+                for i, line in enumerate(f):
+                    if i == linenum:
+                        values = line.strip().split(',')
+                        sharePrice = float(values[4])
+                    elif i > linenum:
+                        break
+            record.append(ticker_item.ticker)
+            record.append(round(sharePrice,2))
+            record.append(ticker_item.volume)
+            record.append(round(sharePrice*ticker_item.volume,2))
+            portfolio_value+=round(sharePrice*ticker_item.volume,2)
+            output.append(record)
+    return render(request, 'portfolio.html', {'today': today, 'day': dayName, 'month': monthName, 'money': money,
+                                              'output': output, 'ticker': ticker, 'portfolio_value': portfolio_value})
+
 
 def education(request):
     return render(request, 'education.html')
+
+
 def dopasowania(request):
     wprowadzony_tekst = request.GET.get('q', '').lower()
     dopasowania_list = []
