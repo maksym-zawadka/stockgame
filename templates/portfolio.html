@@ -15,7 +15,7 @@
             {% endfor %}
         </ul>
     {% endif %}
-    <div class="container">
+    <div class="container" style="max-width: 70vw;">
         <h2 style="text-align: left">Today is: {{ day }}, {{ today.day }} {{ month }} {{ today.year }}</h2>
         <div style="display: flex; flex-direction: row; justify-content: space-between; margin-top: 30px">
             <table class="table table-striped table-bordered table-hover">
@@ -104,6 +104,14 @@
                            style="width: 30%">
                     <button class="btn btn-outline-danger" type="submit" name="sell_button">Sell</button>
                 </form>
+            </div>
+            <div style="align-self:flex-end ">
+                <h5>Go to the next day</h5>
+                <form class="d-flex" method="POST" name="next_day">
+                    {% csrf_token %}
+                    <button class="btn btn-outline-success" type="submit" name="next_day">Next day</button>
+                </form>
+
             </div>
         </div>
     </div>

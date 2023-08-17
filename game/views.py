@@ -8,7 +8,7 @@ from bokeh.models import ColumnDataSource, DatetimeTickFormatter, HoverTool
 from bokeh.embed import components
 from django.http import JsonResponse
 from django.contrib import messages
-
+from datetime import datetime, timedelta
 
 def home(request):
     return render(request, 'home.html')
@@ -93,7 +93,7 @@ def analysis(request):
     if ndaysD is None:
         ndaysD = defaultndaysD
     # NASDAQ 100
-    df = pd.read_csv("Stocks/ndx.us.csv", sep=',', header=0, encoding='utf-8', nrows=1258 + daysInGame)
+    df = pd.read_csv("Stocks/ndx.us.csv", sep=',', header=0, encoding='utf-8', nrows=1259 + daysInGame)
     ndxEMA = ta.trend.EMAIndicator(close=df['Close'], window=30, fillna=False)
     ndxSMA = ta.trend.SMAIndicator(close=df['Close'], window=30, fillna=False)
     df['EMA'] = ndxEMA.ema_indicator()
@@ -107,7 +107,7 @@ def analysis(request):
     w = 12 * 60 * 60 * 1000  # half day in ms
 
     # Tworzenie wykresu świecowego
-    p = figure(x_axis_type='datetime', title='Nasdaq 100 (^NDX)', width=800, height=400, sizing_mode="fixed", tools="")
+    p = figure(x_axis_type='datetime', title='Nasdaq 100 (^NDX)', width=600, height=300, sizing_mode="fixed", tools="")
     p.segment(x0='Date', y0='High', x1='Date', y1='Low', source=source, color="black")
     p.vbar(df.Date[inc], w, df.Open[inc], df.Close[inc], fill_color="green", line_color="black")
     p.vbar(df.Date[dec], w, df.Open[dec], df.Close[dec], fill_color="red", line_color="black")
@@ -126,7 +126,7 @@ def analysis(request):
     # SP500
     # 1258
     dfS = pd.read_csv("Stocks/spx.us.csv", sep=',', header=0, encoding='utf-8', nrows=ndaysSP,
-                      skiprows=range(1, 1259 + daysInGame - ndaysSP))
+                      skiprows=range(1, 1260 + daysInGame - ndaysSP))
 
     dfS['Date'] = pd.to_datetime(dfS['Date'])
     sourceS = ColumnDataSource(dfS)
@@ -135,7 +135,7 @@ def analysis(request):
     decS = dfS.Open > dfS.Close
     w = 12 * 60 * 60 * 1000  # half day in ms
     # Tworzenie wykresu świecowego
-    pS = figure(x_axis_type='datetime', title='S&P 500 (^SPX)', width=800, height=400, sizing_mode="fixed", tools="")
+    pS = figure(x_axis_type='datetime', title='S&P 500 (^SPX)', width=600, height=300, sizing_mode="fixed", tools="")
     pS.segment(x0='Date', y0='High', x1='Date', y1='Low', source=sourceS, color="black")
     pS.vbar(dfS.Date[incS], w, dfS.Open[incS], dfS.Close[incS], fill_color="green", line_color="black")
     pS.vbar(dfS.Date[decS], w, dfS.Open[decS], dfS.Close[decS], fill_color="red", line_color="black")
@@ -248,7 +248,7 @@ def analysis(request):
         if ndaysD == 1200:
             ndaysD = linenum - 1
         data = pd.read_csv("Stocks/" + ticker + ".us.csv", sep=',', header=0, encoding='utf-8',
-                           nrows=linenum - 1)
+                           nrows=linenum -1) #data wczorajsza wiec -2 bo liczone od zera
 
         # DODAWANIE KOLUMN Z SMA
         if request.session.get('sma10') != 0:
@@ -299,7 +299,7 @@ def analysis(request):
             data['BOLLINGERMAVG'] = dBOLLINGER.bollinger_mavg()
 
         # usuniecie danych spoza wyznaczonego  zakresu
-        data = data.drop(data.index[0:linenum - 1 + daysInGame - ndaysD])
+        data = data.drop(data.index[0:linenum - 1 - ndaysD])
         data['Date'] = pd.to_datetime(data['Date'])
         sourceData = ColumnDataSource(data)
         sourceDataMACD = ColumnDataSource(data)
@@ -307,7 +307,7 @@ def analysis(request):
         decData = data.Open > data.Close
         w = 12 * 60 * 60 * 1000  # half day in ms
         # Tworzenie wykresu świecowego
-        pData = figure(x_axis_type='datetime', title=ticker, width=1200, height=600, sizing_mode="fixed", tools="")
+        pData = figure(x_axis_type='datetime', title=ticker, width=900, height=500, sizing_mode="fixed", tools="")
         pData.segment(x0='Date', y0='High', x1='Date', y1='Low', source=sourceData, color="black")
         pData.vbar(data.Date[incData], w, data.Open[incData], data.Close[incData], fill_color="green",
                    line_color="black")
@@ -362,7 +362,7 @@ def analysis(request):
 
         # MACD CHART
         if request.session.get('macd') == 1:
-            macdChart = figure(x_axis_type='datetime', width=1200, height=300, sizing_mode="fixed",
+            macdChart = figure(x_axis_type='datetime', width=900, height=250, sizing_mode="fixed",
                                tools="")
             macdChart.segment(x0='Date', source=sourceDataMACD)
             macdChart.line(data.Date, data.MACD, line_color="#C451EC", line_width=2.0,
@@ -443,7 +443,7 @@ def portfolio(request):
                             new_volume = Stock.objects.get(ticker=ticker).volume + vol
                             Stock.objects.filter(ticker=ticker).update(volume=new_volume)
                         newMoney=Money.objects.all().first()
-                        newMoney.cash=round((money - price),2)
+                        newMoney.cash=round((money - price),3)
                         newMoney.save()
                         messages.success(request, "Added successfully")
                     else:
@@ -453,7 +453,7 @@ def portfolio(request):
                     messages.error(request, "Wrong values")
                     return redirect('portfolio')
         #formularz sprzedazy
-        else:
+        elif 'sell_button' in request.POST:
             ticker = request.POST.get('sellticker')
             try:
                 vol = int(request.POST.get('sellvolume'))
@@ -496,7 +496,7 @@ def portfolio(request):
                         else:
                             cash = money + vol * sharePrice
                             newMoney = Money.objects.all().first()
-                            newMoney.cash = round((cash), 2)
+                            newMoney.cash = round(cash,3)
                             newMoney.save()
                             new_vol = stockvolume - vol
                             Stock.objects.filter(ticker=ticker).update(volume=new_vol)
@@ -507,6 +507,26 @@ def portfolio(request):
                 else:
                     messages.error(request, ("Wrong values"))
                     return redirect('portfolio')
+        else:
+            dates = []
+            with open("Stocks/dates.txt", 'r') as p:
+                for line in p:
+                    dates.append(datetime.strptime(line.strip(), '%Y-%m-%d'))
+            # if date.weekday() ==4:
+            #     date += timedelta(days=3)  # Przesunięcie do poniedziałku
+            # elif date.weekday() < 4:  # Dni od poniedziałku do czwartku
+            #     date += timedelta(days=1)
+            nextDate = None
+            for data in dates:
+                if data.date() > today.date():
+                    nextDate = data
+                    break
+
+            newToday = TodayDate.objects.all().first()
+            newToday.date = nextDate.date()
+            newToday.daysInGame = newToday.daysInGame+1
+            newToday.save()
+            return redirect(portfolio)
     else:
         ticker = Stock.objects.all()
         output = []
@@ -531,11 +551,12 @@ def portfolio(request):
                     elif i > linenum:
                         break
             record.append(ticker_item.ticker)
-            record.append(round(sharePrice,2))
+            record.append(sharePrice)
             record.append(ticker_item.volume)
-            record.append(round(sharePrice*ticker_item.volume,2))
-            portfolio_value+=round(sharePrice*ticker_item.volume,2)
+            record.append(round((sharePrice*ticker_item.volume),3))
+            portfolio_value+=sharePrice*ticker_item.volume
             output.append(record)
+    portfolio_value=round(portfolio_value,3)
     return render(request, 'portfolio.html', {'today': today, 'day': dayName, 'month': monthName, 'money': money,
                                               'output': output, 'ticker': ticker, 'portfolio_value': portfolio_value})
 
