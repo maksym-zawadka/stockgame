@@ -389,7 +389,62 @@ def analysis(request):
                    'scriptS': scriptS, 'divD': divD, 'scriptD': scriptD, 'scriptMACD': scriptMACD, 'divMACD': divMACD,
                    'ticker': ticker})
 
+def summary(request):
+    if request.method == 'POST':
+        if 'newgame' in request.POST:
+            newToday = TodayDate.objects.all().first()
+            newToday.date = "2015-01-02"
+            newToday.daysInGame = 0
+            newToday.save()
+            newMoney= Money.objects.all().first()
+            newMoney.cash = 5000
+            newMoney.save()
+            Stock.objects.all().delete()
+            return redirect('home')
+    else:
+        todayObj = TodayDate.objects.all().first()
+        today = todayObj.date
+        dayName = today.strftime("%A")
+        monthName = today.strftime("%B")
+        money = Money.objects.all().first().cash
+        portfolio_value = 0
+        sharePrice = 0
+        ticker = Stock.objects.all()
+        output = []
+        for ticker_item in ticker:
+            record = []
 
+            # szukanie ktora z kolei jest linia z dzisiejsza data
+            date = today.strftime("%Y-%m-%d")
+            linenum = 0
+            f = open("Stocks/" + ticker_item.ticker + ".us.csv")
+            for nr_linii, linia in enumerate(f, start=1):
+                if linia.startswith(date):
+                    linenum = nr_linii
+            linenum = linenum - 1  # wczorajsza data
+            values = ""
+            sharePrice = 0
+            with open("Stocks/" + ticker_item.ticker + ".us.csv") as f:
+                for i, line in enumerate(f):
+                    if i == linenum:
+                        values = line.strip().split(',')
+                        sharePrice = float(values[4])
+                    elif i > linenum:
+                        break
+            record.append(ticker_item.ticker)
+            record.append(sharePrice)
+            record.append(ticker_item.volume)
+            record.append(round((sharePrice * ticker_item.volume), 3))
+            portfolio_value += sharePrice * ticker_item.volume
+            output.append(record)
+
+
+    portfolio_value = round(portfolio_value, 3)
+    total = round(portfolio_value+money,3)
+    earnings = round(total-5000,3)
+    roi=round((earnings/5000)*100,2)
+    return render(request,'summary.html', {'today': today, 'day': dayName, 'month': monthName, 'money': money,
+                                              'output': output, 'ticker': ticker, 'portfolio_value': portfolio_value, 'total': total,'earnings':earnings,'roi':roi})
 def portfolio(request):
     todayObj = TodayDate.objects.all().first()
     today = todayObj.date
@@ -398,6 +453,10 @@ def portfolio(request):
     money = Money.objects.all().first().cash
     portfolio_value = 0
     sharePrice = 0
+
+    #last day
+    if today.strftime("%Y-%m-%d")=='2017-11-10':
+        return redirect('summary')
 
     if request.method == 'POST':
         # formularz zakupu
@@ -507,7 +566,7 @@ def portfolio(request):
                 else:
                     messages.error(request, ("Wrong values"))
                     return redirect('portfolio')
-        else:
+        elif 'next_day' in request.POST:
             dates = []
             with open("Stocks/dates.txt", 'r') as p:
                 for line in p:
@@ -525,6 +584,33 @@ def portfolio(request):
             newToday = TodayDate.objects.all().first()
             newToday.date = nextDate.date()
             newToday.daysInGame = newToday.daysInGame+1
+            newToday.save()
+            return redirect(portfolio)
+        elif 'next_week' in request.POST:
+            dates = []
+            with open("Stocks/dates.txt", 'r') as p:
+                for line in p:
+                    dates.append(datetime.strptime(line.strip(), '%Y-%m-%d'))
+            nextDate = today
+            for i in range(5):
+                for data in dates:
+                    if data.date() > nextDate.date():
+                        nextDate = data
+                        break
+        elif 'next_month' in request.POST:
+            dates = []
+            with open("Stocks/dates.txt", 'r') as p:
+                for line in p:
+                    dates.append(datetime.strptime(line.strip(), '%Y-%m-%d'))
+            nextDate = today
+            for i in range(30):
+                for data in dates:
+                    if data.date() > nextDate.date():
+                        nextDate = data
+                        break
+            newToday = TodayDate.objects.all().first()
+            newToday.date = nextDate.date()
+            newToday.daysInGame = newToday.daysInGame+30
             newToday.save()
             return redirect(portfolio)
     else:

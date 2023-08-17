@@ -106,12 +106,19 @@
                 </form>
             </div>
             <div style="align-self:flex-end ">
-                <h5>Go to the next day</h5>
+                <h4>Go to the next day</h4>
                 <form class="d-flex" method="POST" name="next_day">
                     {% csrf_token %}
-                    <button class="btn btn-outline-success" type="submit" name="next_day">Next day</button>
+                    <button class="btn btn-outline-success" type="submit" name="next_day" style="width: 150px;">Skip day</button>
                 </form>
-
+                <form class="d-flex" method="POST" name="next_week">
+                    {% csrf_token %}
+                    <button class="btn btn-outline-success" type="submit" name="next_week" style="width: 150px; margin-top: 20px; margin-bottom: 20px">Skip 7 days</button>
+                </form>
+                <form class="d-flex" method="POST" name="next_month">
+                    {% csrf_token %}
+                    <button class="btn btn-outline-success" type="submit" name="next_month" style="width: 150px;">Skip 30 days</button>
+                </form>
             </div>
         </div>
     </div>
