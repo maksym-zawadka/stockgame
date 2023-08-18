@@ -20,7 +20,7 @@
         margin-left: 10px;
         margin-bottom: 10px;
         margin-right: 10px;
-        font-size: 20px;
+        font-size: 22px;
     }
     .link{
         text-decoration: none;
@@ -29,22 +29,53 @@
 
     </style>
     {% load static %}
+    <div style="text-align: center; margin-top: 20px;">
+    <h2>Basics</h2>
     <div class="container" style="width:70vw; display: flex; flex-wrap: wrap; column-gap: 10px; row-gap: 10px; justify-content: center; margin-top: 40px;">
+        <a class="link" href="understanding-investing.html">
+        <div class="article" style="background-image: url({% static 'images/img2.jpg' %}); background-size: cover">
+            <p class="article-text">Understanding investing</p>
+        </div>
+        </a>
+        <a class="link" href="what-is-stock.html">
+        <div class="article" style="background-image: url({% static 'images/img1.jpg' %}); background-size: cover">
+            <p class="article-text">What is stock?</p>
+        </div>
+        </a>
+        <a class="link" href="what-is-ticker.html">
+        <div class="article" style="background-image: url({% static 'images/img7.jpg' %}); background-size: cover">
+            <p class="article-text">What is a stock ticker symbol?</p>
+        </div>
+        </a>
+    </div>
+    <h2 style="margin-top: 30px;">Indicators</h2>
+    <div class="container" style="width:70vw; display: flex; flex-wrap: wrap; column-gap: 10px; row-gap: 10px; justify-content: center; margin-top: 40px;">
+        <a class="link" href="understanding-indicators.html">
+        <div class="article" style="background-image: url({% static 'images/img4.jpg' %}); background-size: cover">
+            <p class="article-text" >Understanding indicators</p>
+        </div>
+        </a>
         <a class="link" href="what-is-sma.html">
         <div class="article" style="background-image: url({% static 'images/img6.jpg' %}); background-size: cover">
-            <p class="article-text" >What is SMA?</p>
+            <p class="article-text" >What is simple moving average (SMA)?</p>
         </div>
         </a>
         <a class="link" href="what-is-ema.html">
         <div class="article" style="background-image: url({% static 'images/img5.jpg' %}); background-size: cover">
-            <p class="article-text">What is EMA?</p>
+            <p class="article-text">What is exponential moving average (EMA)?</p>
         </div>
         </a>
-        <div class="article" style="background-image: url({% static 'images/img3.jpg' %}); background-size: cover">
-            <p class="article-text">fsafasfafafasf</p>
+        <a class="link" href="what-are-bb.html">
+        <div class="article" style="background-image: url({% static 'images/img8.jpg' %}); background-size: cover">
+            <p class="article-text">What are Bollinger Bands?</p>
         </div>
-        <div class="article" style="background-image: url({% static 'images/img4.jpg' %}); background-size: cover">
-            <p class="article-text">fsafasfafafasf</p>
+        </a>
+        <a class="link" href="what-is-macd.html">
+        <div class="article" style="background-image: url({% static 'images/img9.jpg' %}); background-size: cover">
+            <p class="article-text">What is MACD?</p>
         </div>
+        </a>
     </div>
+    </div>
+
 {% endblock %}
