@@ -1,8 +1,50 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="container">
-    <div style="display: flex; flex-direction: row; justify-content: space-between; margin-top: 30px" >
-    sggsgsd
-    </div>
+    <style>
+    .article{
+        border: 3px solid #474747;
+        border-radius: 10px;
+        transition: 0.2s;
+        width: 300px;
+        height: 200px;
+        display: flex;
+        align-items: flex-end
+
+    }
+
+    .article:hover{
+        opacity: 0.8;
+        cursor: pointer;
+    }
+    .article-text{
+        margin-left: 10px;
+        margin-bottom: 10px;
+        margin-right: 10px;
+        font-size: 20px;
+    }
+    .link{
+        text-decoration: none;
+        color: white;
+    }
+
+    </style>
+    {% load static %}
+    <div class="container" style="width:70vw; display: flex; flex-wrap: wrap; column-gap: 10px; row-gap: 10px; justify-content: center; margin-top: 40px;">
+        <a class="link" href="what-is-sma.html">
+        <div class="article" style="background-image: url({% static 'images/img6.jpg' %}); background-size: cover">
+            <p class="article-text" >What is SMA?</p>
+        </div>
+        </a>
+        <a class="link" href="what-is-ema.html">
+        <div class="article" style="background-image: url({% static 'images/img5.jpg' %}); background-size: cover">
+            <p class="article-text">What is EMA?</p>
+        </div>
+        </a>
+        <div class="article" style="background-image: url({% static 'images/img3.jpg' %}); background-size: cover">
+            <p class="article-text">fsafasfafafasf</p>
+        </div>
+        <div class="article" style="background-image: url({% static 'images/img4.jpg' %}); background-size: cover">
+            <p class="article-text">fsafasfafafasf</p>
+        </div>
     </div>
 {% endblock %}

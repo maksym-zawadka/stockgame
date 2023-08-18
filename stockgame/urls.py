@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from game import views
+from django.shortcuts import render
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,5 +26,6 @@ urlpatterns = [
     path('portfolio/', views.portfolio, name="portfolio"),
     path('education/', views.education, name="education"),
     path('dopasowania/', views.dopasowania, name='dopasowania'),
-    path('summary/', views.summary, name='summary')
+    path('summary/', views.summary, name='summary'),
+    path('education/what-is-sma.html', lambda request: render(request, 'education/what-is-sma.html'), name='sma')
 ]
