@@ -1,3 +1,68 @@
 {% extends 'base.html' %}
 {% block content %}
+    <style>
+        .line {
+            width: 500px;
+            height: 3px;
+            background-color: darkgrey;
+        }
+
+        .header {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .text {
+            font-size: 18px;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+    </style>
+    <div class="container" style="width:60vw; display: flex; flex-wrap: wrap; margin-top: 40px; flex-direction: column">
+        <h2> What are Bollinger Bands?</h2>
+        <div class="line"></div>
+        <div style="margin-top: 40px">
+            <p class="header"> Bollinger Bands</p>
+            <p class="text">
+                A Bollinger Band is a technical analysis tool defined by a set of trendlines. They are plotted as two
+                standard deviations, both positively and negatively, away from a simple moving average (SMA) of a
+                security's price and can be adjusted to user preferences.
+                <br/><br/>
+
+                Bollinger Bands was developed by technical trader John Bollinger and designed to give investors a
+                higher probability of identifying when an asset is oversold or overbought.
+                <br/><br/>
+
+
+                Bollinger Bands is a technical analysis tool to generate oversold or overbought signals and was
+                developed by John Bollinger.<br/>
+                Three lines compose Bollinger Bands: A simple moving average, or the middle band, and an upper and lower
+                band.<br/>
+                The upper and lower bands are typically 2 standard deviations +/- from a 20-day simple moving average
+                and can be modified.<br/>
+                When the price continually touches the upper Bollinger Band, it can indicate an overbought signal.<br/>
+                If the price continually touches the lower band it can indicate an oversold signal.<br/><br/>
+            <p class="header">Interpreting Bollinger Bands </p>
+            <p class="text">
+                <span class="bold">Squeeze</span>
+<br/>
+                The "squeeze" is the central concept of Bollinger Bands. When the bands come close together,
+                constricting the moving average, it is called a squeeze. A squeeze signals a period of low volatility
+                and is considered by traders to be a potential sign of future increased volatility and possible trading
+                opportunities.
+
+                Conversely, the wider apart the bands move, the more likely the chance of a decrease in volatility and
+                the greater the possibility of exiting a trade. These conditions are not trading signals. The bands do
+                not indicate when the change may take place or in which direction the price could move.<br/>
+                <span class="bold">Breakouts</span>
+<br/>
+                Approximately 90% of price action occurs between the two bands.1 Any breakout above or below the bands
+                is significant. The breakout is not a trading signal and many investors mistake that when the price hits
+                or exceeds one of the bands as a signal to buy or sell. Breakouts provide no clue as to the direction
+                and extent of future price movement.
+            </p>
+        </div>
+    </div>
 {% endblock %}

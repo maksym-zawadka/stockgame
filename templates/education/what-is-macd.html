@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+    <style>
+        .line {
+            width: 500px;
+            height: 3px;
+            background-color: darkgrey;
+        }
+
+        .header {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .text {
+            font-size: 18px;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+    </style>
+    <div class="container" style="width:60vw; display: flex; flex-wrap: wrap; margin-top: 40px; flex-direction: column">
+        <h2> What is MACD?</h2>
+        <div class="line"></div>
+        <div style="margin-top: 40px">
+            <p class="header">Moving Average Convergence/Divergence (MACD)</p>
+            <p class="text">
+                Moving average convergence/divergence (MACD, or MAC-D) is a trend-following momentum indicator that
+                shows the relationship between two exponential moving averages (EMAs) of a security’s price. The MACD
+                line is calculated by subtracting the 26-period EMA from the 12-period EMA.
+                <br/><br/>
+                The result of that calculation is the MACD line. A nine-day EMA of the MACD line is called the signal
+                line, which is then plotted on top of the MACD line, which can function as a trigger for buy or sell
+                signals. Traders may buy the security when the MACD line crosses above the signal line and sell—or
+                short—the security when the MACD line crosses below the signal line. MACD indicators can be interpreted
+                in several ways, but the more common methods are crossovers, divergences, and rapid rises/falls.
+            <p class="header"> Interpreting MACD</p>
+            <p class="text">
+                When the MACD (Moving Average Convergence Divergence) drops below the signal line, it serves as a
+                bearish indicator, potentially signifying an opportune moment for selling. Conversely, if the MACD
+                ascends above the signal line, this bullish signal implies the asset's price could witness an upward
+                surge. To avoid premature decisions, certain traders wait for a verified crossover above the signal line
+                before entering a position. This tactic aims to minimize the risk of falling victim to deceptive signals
+                and entering a position prematurely.
+                <br/><br/>
+When MACD forms highs or lows that that exceed the corresponding highs and lows on the price, it is called a divergence. A bullish divergence appears when MACD forms two rising lows that correspond with two falling lows on the price. This is a valid bullish signal when the long-term trend is still positive.
+                <br/><br/>
+
+            </p>
+        </div>
+    </div>
+{% endblock %}

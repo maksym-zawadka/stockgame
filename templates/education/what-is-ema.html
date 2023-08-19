@@ -1,3 +1,59 @@
 {% extends 'base.html' %}
 {% block content %}
+    <style>
+        .line {
+            width: 500px;
+            height: 3px;
+            background-color: darkgrey;
+        }
+
+        .header {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .text {
+            font-size: 18px;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+    </style>
+    <div class="container" style="width:60vw; display: flex; flex-wrap: wrap; margin-top: 40px; flex-direction: column">
+        <h2> What is Exponential Moving Average?</h2>
+        <div class="line"></div>
+        <div style="margin-top: 40px">
+            <p class="header"> Exponential Moving Average</p>
+            <p class="text">
+                An exponential moving average (EMA) is a type of moving average (MA) that places a greater weight and
+                significance on the most recent data points. The exponential moving average is also referred to as the
+                exponentially weighted moving average. An exponentially weighted moving average reacts more
+                significantly to recent price changes than a simple moving average simple moving average (SMA), which
+                applies an equal weight to all observations in the period.
+                <br/><br/>
+                The 12- and 26-day exponential moving averages (EMAs) are often the most quoted and analyzed short-term
+                averages. The 12- and 26-day are used to create indicators like the moving average convergence
+                divergence (MACD) and the percentage price oscillator (PPO). In general, the 50- and 200-day EMAs are
+                used as indicators for long-term trends. When a stock price crosses its 200-day moving average, it is a
+                technical signal that a reversal has occurred.
+                <br/><br/>
+
+                Traders who employ technical analysis find moving averages very useful and insightful when applied
+                correctly. However, they also realize that these signals can create havoc when used improperly or
+                misinterpreted. All the moving averages commonly used in technical analysis are lagging indicators.
+                <br/><br/>
+            <p class="header">Limitations of Exponential Moving Average </p>
+            <p class="text">
+                It is unclear whether or not more emphasis should be placed on the most recent days in the time period.
+                Many traders believe that new data better reflects the current trend of the security. At the same time,
+                others feel that overweighting recent dates creates a bias that leads to more false alarms.
+
+                Similarly, the EMA relies wholly on historical data. Many economists believe that markets are efficient,
+                which means that current market prices already reflect all available information. If markets are indeed
+                efficient, using historical data should tell us nothing about the future direction of asset prices.
+
+            </p>
+        </div>
+    </div>
 {% endblock %}

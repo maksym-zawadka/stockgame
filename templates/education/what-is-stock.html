@@ -1,3 +1,89 @@
 {% extends 'base.html' %}
 {% block content %}
+    <style>
+        .line {
+            width: 500px;
+            height: 3px;
+            background-color: darkgrey;
+        }
+
+        .header {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .text {
+            font-size: 18px;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+    </style>
+    <div class="container" style="width:60vw; display: flex; flex-wrap: wrap; margin-top: 40px; flex-direction: column">
+        <h2> What is stock?</h2>
+        <div class="line"></div>
+        <div style="margin-top: 40px">
+            <p class="header"> Common stock</p>
+            <p class="text"> Within a corporation, common stock functions as a security embodying ownership. Those in
+                possession of common stock partake in selecting the board of directors and contributing to decisions
+                regarding corporate policies. Over an extended period, this type of equity ownership generally generates
+                superior returns. Nevertheless, during the process of liquidation, common shareholders possess
+                entitlement to a company's assets solely subsequent to the complete settlement of bondholders, preferred
+                shareholders, and other debt holders.
+
+                In the company's balance sheet, common stock finds representation within the stockholder's equity
+                segment.
+                <br/><br/>
+                A company's ongoing and future profits find representation in common stock as a residual claim. This
+                establishes shareholders as partial owners of the company. It's crucial to note that this ownership
+                doesn't grant shareholders the ability to assert control over physical assets like chairs, desks, or
+                computers within the company's premises. These assets are owned by the legal entity of the corporation
+                itself. Instead, shareholders possess ownership of the residual claim itself. Investors and traders can
+                engage in the trading of common stock on exchanges, facilitating buying and selling. Shareholders
+                holding common stock might also be eligible to receive dividends.
+                <br/><br/>
+
+                The Dutch East India Company introduced the first-ever common stock in 1602, marking its debut on the
+                Amsterdam Stock Exchange. Subsequently, stock markets have proliferated globally over the course of more
+                than 400 years. Many thousands of companies are now listed on international stock exchanges, including
+                prominent ones like the London Stock Exchange and the Tokyo Stock Exchange.
+                <br/><br/>
+
+                Major U.S.-based stocks are traded on public exchanges such as the New York Stock Exchange (NYSE) and
+                NASDAQ. By Q1 2022, the NYSE had amassed 7,417 listings, boasting a combined market capitalization of
+                approximately $53 trillion. This figure solidified its position as the world's largest stock exchange in
+                terms of market capitalization. International stock exchanges exist for foreign stocks as well.
+                Companies of smaller size that fail to meet listing prerequisites for exchanges are labeled as unlisted.
+                These unlisted stocks are traded through the over-the-counter (OTC) market.
+                <br/><br/>
+            <p class="header"> Preferred stock</p>
+            <p class="text">
+                Preferred stock, a specific type of stock, holds the distinction of paying shareholders a predetermined
+                dividend. This variety of stock takes precedence over common stock when it comes to dividend
+                distribution. Despite its nomenclature, preferred stock doesn't inherently enjoy favoritism among most
+                investors (though its advantages are certainly notable).
+                <br/><br/>
+                In various respects, preferred stock mirrors the characteristics of a bond. To elucidate, the primary
+                source of returns from preferred stock typically stems from its dividend. Additionally, preferred shares
+                tend to offer a higher yield compared to common shares. Analogous to bonds, preferred stock exhibits
+                improved performance in periods of declining interest rates. Moreover, preferred stock is assigned a par
+                value upon issuance, which signifies its initial value and potential for redemption upon the maturity of
+                the preferred shares.
+                <br/><br/>
+                Preferred stock further holds the potential for being "called" by the company, essentially redeemed, on
+                a prearranged date. Consequently, the call price might surpass the original investor's purchase price.
+                An additional distinctive aspect of select varieties of preferred stock involves their capability to
+                transform into a fixed quantity of common shares; the opposite transformation isn't feasible. This
+                category of stock is referred to as convertible preferred stock.
+                <br/><br/>
+
+                For investors with a short-term outlook, preferred stock might offer a more suitable investment choice,
+                particularly if they are unable to retain common stock for a sufficient duration to overcome
+                fluctuations in share prices. This is due to the relatively diminished volatility associated with
+                preferred stock. However, it's worth noting that while preferred stock tends to experience fewer
+                fluctuations, its potential for long-term growth is generally lower compared to common stock.
+            </p>
+        </div>
+    </div>
 {% endblock %}

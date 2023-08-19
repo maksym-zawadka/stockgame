@@ -1,3 +1,53 @@
 {% extends 'base.html' %}
 {% block content %}
+    <style>
+        .line {
+            width: 500px;
+            height: 3px;
+            background-color: darkgrey;
+        }
+
+        .header {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .text {
+            font-size: 18px;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+    </style>
+    <div class="container" style="width:60vw; display: flex; flex-wrap: wrap; margin-top: 40px; flex-direction: column">
+        <h2> What is Simple Moving Average?</h2>
+        <div class="line"></div>
+        <div style="margin-top: 40px">
+            <p class="header"> Simple Moving Average</p>
+            <p class="text">
+                A simple moving average (SMA) calculates the average of a selected range of prices, usually closing
+                prices, by the number of periods in that range.
+                <br/><br/>
+                A simple moving average (SMA) is an arithmetic moving average calculated by adding recent prices and
+                then dividing that figure by the number of time periods in the calculation average. For example, one
+                could add the closing price of a security for a number of time periods and then divide this total by
+                that same number of periods. Short-term averages respond quickly to changes in the price of the
+                underlying security, while long-term averages are slower to react. There are other types of moving
+                averages, including the exponential moving average (EMA) and the weighted moving average (WMA).
+<br/><br/>
+            <p class="header">Limitations of Simple Moving Average </p>
+            <p class="text">
+ It is unclear whether or not more emphasis should be placed on the most recent days in the time period or on more distant data. Many traders believe that new data will better reflect the current trend the security is moving with. At the same time, other traders feel that privileging certain dates over others will bias the trend. Therefore, the SMA may rely too heavily on outdated data since it treats the 10th or 200th day's impact the same as the first or second day's.
+
+Similarly, the SMA relies wholly on historical data. Many people (including economists) believe that markets are efficient—that is, that current market prices already reflect all available information. If markets are indeed efficient, using historical data should tell us nothing about the future direction of asset prices.
+
+            </p>
+            <br/>
+            <p class="header">How Simple Moving Average is used in technical analysis?</p>
+            <p class="text">
+                Traders use simple moving averages (SMAs) to chart the long-term trajectory of a stock or other security, while ignoring the noise of day-to-day price movements. This allows traders to compare medium- and long-term trends over a larger time horizon. For example, if the 200-day SMA of a security falls below its 50-day SMA, this is usually interpreted as a bearish death cross pattern and a signal of further declines. The opposite pattern, the golden cross, indicates potential for a market rally.
+            </p>
+        </div>
+    </div>
 {% endblock %}

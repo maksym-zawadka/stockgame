@@ -1,3 +1,64 @@
 {% extends 'base.html' %}
 {% block content %}
+    <style>
+        .line {
+            width: 500px;
+            height: 3px;
+            background-color: darkgrey;
+        }
+
+        .header {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .text {
+            font-size: 18px;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+    </style>
+    <div class="container" style="width:60vw; display: flex; flex-wrap: wrap; margin-top: 40px; flex-direction: column">
+        <h2> Understanding indicators</h2>
+        <div class="line"></div>
+        <div style="margin-top: 40px">
+            <p class="header"> What are technical indicators?</p>
+            <p class="text">
+                Traders who adhere to technical analysis rely on heuristic or pattern-based signals known as technical
+                indicators. These signals emerge from factors such as the price, volume, and open interest of securities
+                or contracts.
+                <br/><br/>
+                Utilizing historical data as a foundation, technical analysts harness indicators to anticipate
+                forthcoming price fluctuations. Among the prevalent technical indicators are the Relative Strength Index
+                (RSI), Money Flow Index (MFI), stochastics, moving average convergence divergence (MACD), and Bollinger
+                Bands.
+                <br/><br/>
+                Technical indicators, also known as “technicals,” are focused on historical trading data, such as price,
+                volume, and open interest, rather than the fundamentals of a business, such as earnings, revenue, or
+                profit margins. Technical indicators are commonly used by active traders, since they’re designed to
+                analyze short-term price movements, but long-term investors may also use technical indicators to
+                identify entry and exit points.
+            <p class="header">Type of indicators</p>
+            <p class="text">
+                Technical indicators in trading can be classified into two fundamental categories:
+                <br/><br/>
+                <span class="bold">Overlays:</span> These indicators share the same scale as prices and are depicted directly over the price data
+                on a stock chart. Examples encompass moving averages and Bollinger Bands, among others.
+                <br/><br/>
+                <span class="bold">Oscillators:</span> Indicators falling under this category oscillate between local minimum and maximum points,
+                and they are positioned either above or below a price chart. Noteworthy instances include the stochastic
+                oscillator, MACD, and RSI.
+                <br/><br/>
+                Traders often engage a variety of technical indicators when scrutinizing a security. With a vast array
+                of options available, traders must opt for indicators that align with their strategy and invest effort
+                in comprehending their mechanisms. Traders might also integrate technical indicators with more
+                subjective methods of technical analysis, like interpreting chart patterns, to formulate trade concepts.
+                The quantitative nature of technical indicators also makes them suitable for integration into automated
+                trading systems.
+
+            </p>
+        </div>
+    </div>
 {% endblock %}
