@@ -15,3 +15,7 @@ class Stock(models.Model):
 
 class Money(models.Model):
     cash = models.FloatField(null=True)
+
+class Portfolio(models.Model):
+    date = models.DateTimeField(null=False, default="2010-01-04")
+    portfolioValue = models.FloatField(null=True)

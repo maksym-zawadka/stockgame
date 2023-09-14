@@ -1,7 +1,7 @@
 import ta.trend
 import ta.volatility
 from django.shortcuts import render, redirect
-from .models import TodayDate, Stock, Money
+from .models import TodayDate, Stock, Money, Portfolio
 import pandas as pd
 from bokeh.plotting import figure
 from bokeh.models import ColumnDataSource, DatetimeTickFormatter, HoverTool
@@ -9,7 +9,7 @@ from bokeh.embed import components
 from django.http import JsonResponse
 from django.contrib import messages
 from datetime import datetime, timedelta
-
+from django.db import connection
 def home(request):
     return render(request, 'home.html')
 
@@ -400,8 +400,28 @@ def summary(request):
             newMoney.cash = 5000
             newMoney.save()
             Stock.objects.all().delete()
+            Portfolio.objects.all().delete()
             return redirect('home')
     else:
+        #wykres
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM game_portfolio")  # Zastąp 'twoja_tabela' odpowiednią nazwą tabeli
+            rows = cursor.fetchall()
+        df = pd.DataFrame(rows, columns=[col[0] for col in cursor.description])
+        source = ColumnDataSource(df)
+        p = figure(title="Account value during time",sizing_mode="fixed", tools="")
+
+        # Dodanie liniowego wykresu do obiektu wykresu
+        p.line(x='date', y='portfolioValue', source=source, line_width=2)
+        p.toolbar.logo = None
+        p.border_fill_color = None
+        p.title.text_font_size = '16pt'
+        p.xaxis.formatter = DatetimeTickFormatter(
+            days=["%d/%m/%Y"],
+            months=["%d/%m/%Y"],
+            years=["%d/%m/%Y"], )
+
+        scriptSummary, divSummary = components(p)
         todayObj = TodayDate.objects.all().first()
         today = todayObj.date
         dayName = today.strftime("%A")
@@ -444,7 +464,8 @@ def summary(request):
     earnings = round(total-5000,3)
     roi=round((earnings/5000)*100,2)
     return render(request,'summary.html', {'today': today, 'day': dayName, 'month': monthName, 'money': money,
-                                              'output': output, 'ticker': ticker, 'portfolio_value': portfolio_value, 'total': total,'earnings':earnings,'roi':roi})
+                                              'output': output, 'ticker': ticker, 'portfolio_value': portfolio_value, 'total': total,'earnings':earnings,'roi':roi,'divSummary': divSummary,
+                   'scriptSummary': scriptSummary,})
 def portfolio(request):
     todayObj = TodayDate.objects.all().first()
     today = todayObj.date
@@ -585,33 +606,128 @@ def portfolio(request):
             newToday.date = nextDate.date()
             newToday.daysInGame = newToday.daysInGame+1
             newToday.save()
+            ticker = Stock.objects.all()
+            for ticker_item in ticker:
+                record=[]
+                # szukanie ktora z kolei jest linia z dzisiejsza data
+                date = today.strftime("%Y-%m-%d")
+                linenum = 0
+                f = open("Stocks/" + ticker_item.ticker + ".us.csv")
+                for nr_linii, linia in enumerate(f, start=1):
+                    if linia.startswith(date):
+                        linenum = nr_linii
+                linenum = linenum - 1  # wczorajsza data
+                values = ""
+                sharePrice = 0
+                with open("Stocks/" + ticker_item.ticker + ".us.csv") as f:
+                    for i, line in enumerate(f):
+                        if i == linenum:
+                            values = line.strip().split(',')
+                            sharePrice = float(values[4])
+                        elif i > linenum:
+                            break
+                portfolio_value += sharePrice * ticker_item.volume
+
+            portfolioUpdate = Portfolio(date=today.strftime("%Y-%m-%d"), portfolioValue=portfolio_value+money)
+            portfolioUpdate.save()
             return redirect(portfolio)
         elif 'next_week' in request.POST:
-            dates = []
-            with open("Stocks/dates.txt", 'r') as p:
-                for line in p:
-                    dates.append(datetime.strptime(line.strip(), '%Y-%m-%d'))
-            nextDate = today
-            for i in range(5):
+            for i in range(7):
+                todayObj = TodayDate.objects.all().first()
+                today=todayObj.date
+                if today.strftime("%Y-%m-%d")=='2017-11-10':
+                    return redirect('summary')
+                portfolio_value=0
+                dates = []
+                with open("Stocks/dates.txt", 'r') as p:
+                    for line in p:
+                        dates.append(datetime.strptime(line.strip(), '%Y-%m-%d'))
+                # if date.weekday() ==4:
+                #     date += timedelta(days=3)  # Przesunięcie do poniedziałku
+                # elif date.weekday() < 4:  # Dni od poniedziałku do czwartku
+                #     date += timedelta(days=1)
+                nextDate = None
                 for data in dates:
-                    if data.date() > nextDate.date():
+                    if data.date() > today.date():
                         nextDate = data
                         break
+                newToday = TodayDate.objects.all().first()
+                newToday.date = nextDate.date()
+                newToday.daysInGame = newToday.daysInGame + 1
+                newToday.save()
+                ticker = Stock.objects.all()
+                for ticker_item in ticker:
+                    record = []
+                    # szukanie ktora z kolei jest linia z dzisiejsza data
+                    date = today.strftime("%Y-%m-%d")
+                    linenum = 0
+                    f = open("Stocks/" + ticker_item.ticker + ".us.csv")
+                    for nr_linii, linia in enumerate(f, start=1):
+                        if linia.startswith(date):
+                            linenum = nr_linii
+                    linenum = linenum - 1  # wczorajsza data
+                    values = ""
+                    sharePrice = 0
+                    with open("Stocks/" + ticker_item.ticker + ".us.csv") as f:
+                        for i, line in enumerate(f):
+                            if i == linenum:
+                                values = line.strip().split(',')
+                                sharePrice = float(values[4])
+                            elif i > linenum:
+                                break
+                    portfolio_value += sharePrice * ticker_item.volume
+
+                portfolioUpdate = Portfolio(date=today.strftime("%Y-%m-%d"), portfolioValue=portfolio_value + money)
+                portfolioUpdate.save()
+            return redirect(portfolio)
         elif 'next_month' in request.POST:
-            dates = []
-            with open("Stocks/dates.txt", 'r') as p:
-                for line in p:
-                    dates.append(datetime.strptime(line.strip(), '%Y-%m-%d'))
-            nextDate = today
             for i in range(30):
+                todayObj = TodayDate.objects.all().first()
+                today = todayObj.date
+                if today.strftime("%Y-%m-%d")=='2017-11-10':
+                    return redirect('summary')
+                portfolio_value = 0
+                dates = []
+                with open("Stocks/dates.txt", 'r') as p:
+                    for line in p:
+                        dates.append(datetime.strptime(line.strip(), '%Y-%m-%d'))
+                # if date.weekday() ==4:
+                #     date += timedelta(days=3)  # Przesunięcie do poniedziałku
+                # elif date.weekday() < 4:  # Dni od poniedziałku do czwartku
+                #     date += timedelta(days=1)
+                nextDate = None
                 for data in dates:
-                    if data.date() > nextDate.date():
+                    if data.date() > today.date():
                         nextDate = data
                         break
-            newToday = TodayDate.objects.all().first()
-            newToday.date = nextDate.date()
-            newToday.daysInGame = newToday.daysInGame+30
-            newToday.save()
+                newToday = TodayDate.objects.all().first()
+                newToday.date = nextDate.date()
+                newToday.daysInGame = newToday.daysInGame + 1
+                newToday.save()
+                ticker = Stock.objects.all()
+                for ticker_item in ticker:
+                    record = []
+                    # szukanie ktora z kolei jest linia z dzisiejsza data
+                    date = today.strftime("%Y-%m-%d")
+                    linenum = 0
+                    f = open("Stocks/" + ticker_item.ticker + ".us.csv")
+                    for nr_linii, linia in enumerate(f, start=1):
+                        if linia.startswith(date):
+                            linenum = nr_linii
+                    linenum = linenum - 1  # wczorajsza data
+                    values = ""
+                    sharePrice = 0
+                    with open("Stocks/" + ticker_item.ticker + ".us.csv") as f:
+                        for i, line in enumerate(f):
+                            if i == linenum:
+                                values = line.strip().split(',')
+                                sharePrice = float(values[4])
+                            elif i > linenum:
+                                break
+                    portfolio_value += sharePrice * ticker_item.volume
+
+                portfolioUpdate = Portfolio(date=today.strftime("%Y-%m-%d"), portfolioValue=portfolio_value + money)
+                portfolioUpdate.save()
             return redirect(portfolio)
     else:
         ticker = Stock.objects.all()
@@ -636,10 +752,20 @@ def portfolio(request):
                         sharePrice = float(values[4])
                     elif i > linenum:
                         break
+            yesterdayPrice=0
+            with open("Stocks/" + ticker_item.ticker + ".us.csv") as f:
+                for i, line in enumerate(f):
+                    if i == linenum-1:
+                        values = line.strip().split(',')
+                        yesterdayPrice = float(values[4])
+                    elif i > linenum:
+                        break
             record.append(ticker_item.ticker)
             record.append(sharePrice)
             record.append(ticker_item.volume)
             record.append(round((sharePrice*ticker_item.volume),3))
+            record.append(round((sharePrice-yesterdayPrice),3))
+            record.append(round((100*(sharePrice-yesterdayPrice)/yesterdayPrice),2))
             portfolio_value+=sharePrice*ticker_item.volume
             output.append(record)
     portfolio_value=round(portfolio_value,3)
