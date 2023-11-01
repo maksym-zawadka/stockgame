@@ -768,9 +768,11 @@ def portfolio(request):
             record.append(round((100*(sharePrice-yesterdayPrice)/yesterdayPrice),2))
             portfolio_value+=sharePrice*ticker_item.volume
             output.append(record)
-    portfolio_value=round(portfolio_value,3)
+    total=f"{round(money+portfolio_value,3):.3f}"
+    money = f"{money:.3f}"
+    portfolio_value=f"{round(portfolio_value,3):.3f}"
     return render(request, 'portfolio.html', {'today': today, 'day': dayName, 'month': monthName, 'money': money,
-                                              'output': output, 'ticker': ticker, 'portfolio_value': portfolio_value})
+                                              'output': output, 'ticker': ticker, 'portfolio_value': portfolio_value,'total': total})
 
 
 def education(request):
