@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-7q#%8=i=cq-)w1#ce9g&tr+#(!0s0$)zh2ni#d2bwm!wsl6813
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['stockgame.up.railway.app']
 
 # Application definition
 
