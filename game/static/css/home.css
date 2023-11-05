@@ -1,0 +1,118 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+:root {
+  --container-height: 385px;
+}
+
+
+.list {
+  max-height: var(--container-height);
+  border: 2px solid #37392e;
+  border-radius: 5px;
+  scroll-snap-type: y mandatory;
+  overscroll-behavior-y: contain;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-timeline: --listTimeline block;
+    width: 500px;
+}
+
+
+.animation {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 100%;
+  background-size: 50px 40px;
+  /* background image on bottom of css for readability */
+}
+
+@supports (animation-timeline: scroll()) {
+  .animation {
+    animation: moveBackground alternate linear;
+    animation-timeline: --listTimeline;
+  }
+}
+
+@keyframes moveBackground {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 calc(var(--container-height) / -1);
+  }
+}
+
+#myUL {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: #f0e6e6;
+      color: #37392e;
+  font-family: "Poppins", sans-serif;
+    font-size: 15px;
+
+}
+
+
+.myli {
+  padding: 20px;
+  border-top: 1px solid #ccc;
+  scroll-snap-align: start;
+}
+
+.myli:first-child {
+  border: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+.animation {
+  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg id='Isolation_Mode' data-name='Isolation Mode' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 633.33 680'%3E%3Cpath fill='%2328AFB0' d='M383.33,500c27.61,0,50,22.39,50,50,0,25.99-19.83,47.35-45.18,49.77l-4.82,.23H50c-27.61,0-50-22.39-50-50,0-25.99,19.83-47.35,45.18-49.77l4.82-.23H383.33Zm200-166.67c27.61,0,50,22.39,50,50s-22.39,50-50,50H50c-27.61,0-50-22.39-50-50s22.39-50,50-50H583.33Zm-200-166.67c27.61,0,50,22.39,50,50,0,25.99-19.83,47.35-45.18,49.77l-4.82,.23H50c-27.61,0-50-22.39-50-50,0-25.99,19.83-47.35,45.18-49.77l4.82-.23H383.33ZM583.33,0c27.61,0,50,22.39,50,50,0,25.99-19.83,47.35-45.18,49.77l-4.82,.23H50C22.39,100,0,77.61,0,50,0,24.01,19.83,2.65,45.18,.23l4.82-.23H583.33Z'/%3E%3C/svg%3E");
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #28afb0;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #19647e;
+}
+
+h2{
+  font-size: 1.5rem;
+}
+
+h1{
+   font-size: 2rem
+}
+
+#myInput {
+  background-image: url("/static/images/searchicon.png"); /* Add a search icon to input */
+  background-position: 10px 12px; /* Position the search icon */
+  background-repeat: no-repeat; /* Do not repeat the icon image */
+  width: 30%; /* Full-width */
+  font-size: 16px; /* Increase font-size */
+  padding: 12px 20px 12px 40px; /* Add some padding */
+  border: 1px solid #ddd; /* Add a grey border */
+  margin-bottom: 12px; /* Add some space below the input */
+}

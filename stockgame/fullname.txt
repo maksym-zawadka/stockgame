@@ -1,0 +1,458 @@
+a, Agilent Technologies Inc.
+aal, American Airlines Group Inc
+aap, Advance Auto Parts Inc
+aapl, Apple Inc
+abbv, Abbvie Inc
+abc, AmerisourceBergen
+abt, Abbott Laboratories
+acgl, Arch Capital Group Ltd
+acn, Accenture plc - Class A
+adbe, Adobe Inc
+adi, Analog Devices Inc.
+adm, Archer Daniels Midland Co.
+adp, Automatic Data Processing Inc.
+adsk, Autodesk Inc.
+aee, Ameren Corp.
+aep, American Electric Power Company Inc.
+aes, AES Corp.
+afl, Aflac Inc.
+aig, American International Group Inc
+aiz, Assurant Inc
+ajg, Arthur J. Gallagher & Co.
+akam, Akamai Technologies Inc
+alb, Albemarle Corp.
+algn, Align Technology, Inc.
+alk, Alaska Air Group Inc.
+all, Allstate Corp (The)
+alle, Allegion plc
+amat, Applied Materials Inc.
+amd, Advanced Micro Devices Inc.
+ame, Ametek Inc
+amgn, AMGEN Inc.
+amp, Ameriprise Financial Inc
+amt, American Tower Corp.
+amzn, Amazon.com Inc.
+anet, Arista Networks Inc
+anss, Ansys Inc. - Registered Shares
+aon, Aon plc. - Class A
+aos, A.O. Smith Corp.
+apa, APA Corporation
+apd, Air Products & Chemicals Inc.
+aph, Amphenol Corp. - Class A
+are, Alexandria Real Estate Equities Inc.
+ato, Atmos Energy Corp.
+atvi, Activision Blizzard Inc
+avb, Avalonbay Communities Inc.
+avgo, Broadcom Inc
+avy, Avery Dennison Corp.
+awk, American Water Works Co. Inc.
+axp, American Express Co.
+azo, Autozone Inc.
+ba, Boeing Co.
+bac, Bank Of America Corp.
+bax, Baxter International Inc.
+bby, Best Buy Co. Inc.
+bdx, Becton Dickinson & Co.
+ben, Franklin Resources, Inc.
+biib, Biogen Inc
+bio, Bio-Rad Laboratories Inc. - Class A
+bk, Bank Of New York Mellon Corp
+blk, Blackrock Inc.
+bmy, Bristol-Myers Squibb Co.
+br, Broadridge Financial Solutions, Inc.
+bro, Brown & Brown, Inc.
+bsx, Boston Scientific Corp.
+bwa, BorgWarner Inc
+bxp, Boston Properties, Inc.
+c, Citigroup Inc
+cag, Conagra Brands Inc
+cah, Cardinal Health, Inc.
+cat, Caterpillar Inc.
+cb, Chubb Limited
+cboe, Cboe Global Markets Inc.
+cci, Crown Castle Inc
+ccl, Carnival Corp. (Paired Stock)
+cdns, Cadence Design Systems, Inc.
+cdw, CDW Corp
+ce, Celanese Corp - Series A
+cf, CF Industries Holdings Inc
+cfg, Citizens Financial Group Inc
+chd, Church & Dwight Co., Inc.
+chrw, C.H. Robinson Worldwide, Inc.
+chtr, Charter Communications Inc. - Class A
+ci, Cigna Group (The)
+cinf, Cincinnati Financial Corp.
+cl, Colgate-Palmolive Co.
+clx, Clorox Co.
+cma, Comerica, Inc.
+cmcsa, Comcast Corp - Class A
+cme, CME Group Inc - Class A
+cmg, Chipotle Mexican Grill
+cmi, Cummins Inc.
+cms, CMS Energy Corporation
+cnc, Centene Corp.
+cnp, Centerpoint Energy Inc.
+cof, Capital One Financial Corp.
+coo, Cooper Companies, Inc.
+cop, Conoco Phillips
+cost, Costco Wholesale Corp
+cpb, Campbell Soup Co.
+cprt, Copart, Inc.
+cpt, Camden Property Trust
+crl, Charles River Laboratories International Inc.
+crm, Salesforce Inc
+csco, Cisco Systems, Inc.
+csgp, Costar Group, Inc.
+csx, CSX Corp.
+ctas, Cintas Corporation
+ctlt, Catalent Inc.
+ctsh, Cognizant Technology Solutions Corp. - Class A
+cvs, CVS Health Corp
+cvx, Chevron Corp.
+czr, Caesars Entertainment Inc
+d, Dominion Energy Inc
+dal, Delta Air Lines, Inc.
+de, Deere & Co.
+dfs, Discover Financial Services
+dg, Dollar General Corp.
+dgx, Quest Diagnostics, Inc.
+dhi, D.R. Horton Inc.
+dhr, Danaher Corp.
+dia, SSgA Active Trust - SPDR Dow Jones Industrial Average ETF
+dis, Walt Disney Co (The)
+dish, Dish Network Corp - Class A
+dlr, Digital Realty Trust Inc
+dltr, Dollar Tree Inc
+dov, Dover Corp.
+dpz, Dominos Pizza Inc
+dri, Darden Restaurants, Inc.
+dte, DTE Energy Co.
+duk, Duke Energy Corp.
+dva, DaVita Inc
+dvn, Devon Energy Corp.
+dxcm, Dexcom Inc
+ea, Electronic Arts, Inc.
+ebay, EBay Inc.
+ecl, Ecolab, Inc.
+ed, Consolidated Edison, Inc.
+efx, Equifax, Inc.
+eix, Edison International
+el, Estee Lauder Cos., Inc. - Class A
+emn, Eastman Chemical Co
+emr, Emerson Electric Co.
+enph, Enphase Energy Inc
+eog, EOG Resources, Inc.
+epam, EPAM Systems Inc
+eqix, Equinix Inc
+eqr, Equity Residential Properties Trust
+eqt, EQT Corp
+es, Eversource Energy
+ess, Essex Property Trust, Inc.
+etn, Eaton Corporation plc
+etr, Entergy Corp.
+ew, Edwards Lifesciences Corp
+exc, Exelon Corp.
+expd, Expeditors International Of Washington, Inc.
+expe, Expedia Group Inc
+exr, Extra Space Storage Inc.
+f, Ford Motor Co.
+fang, Diamondback Energy Inc
+fast, Fastenal Co.
+fb, Meta Platforms Inc - Class A
+fcx, Freeport-McMoRan Inc
+fds, Factset Research Systems Inc.
+fdx, Fedex Corp
+fe, Firstenergy Corp.
+ffiv, F5 Inc
+fis, Fidelity National Information Services, Inc.
+fisv, Fiserv, Inc.
+fitb, Fifth Third Bancorp
+flt, Fleetcor Technologies Inc
+fmc, FMC Corp.
+fox, Fox Corporation - Class B
+foxa, Fox Corporation - Class A
+frc, First Republic Bank
+frt, Federal Realty Investment Trust.
+fslr, First Solar Inc
+ftnt, Fortinet Inc
+gd, General Dynamics Corp.
+ge, General Electric Co.
+gen, Gen Digital Inc
+gild, Gilead Sciences, Inc.
+gis, General Mills, Inc.
+glw, Corning, Inc.
+gm, General Motors Company
+gnrc, Generac Holdings Inc
+goog, Alphabet Inc - Class C
+googl, Alphabet Inc - Class A
+gpc, Genuine Parts Co.
+gpn, Global Payments, Inc.
+grmn, Garmin Ltd
+gs, Goldman Sachs Group, Inc.
+gww, W.W. Grainger Inc.
+hal, Halliburton Co.
+has, Hasbro, Inc.
+hban, Huntington Bancshares, Inc.
+hca, HCA Healthcare Inc
+hd, Home Depot, Inc.
+hes, Hess Corporation
+hig, Hartford Financial Services Group Inc.
+hii, Huntington Ingalls Industries Inc
+hlt, Hilton Worldwide Holdings Inc
+holx, Hologic, Inc.
+hon, Honeywell International Inc
+hpq, HP Inc
+hrl, Hormel Foods Corp.
+hsic, Henry Schein Inc.
+hst, Host Hotels & Resorts Inc
+hsy, Hershey Company
+hum, Humana Inc.
+ibm, International Business Machines Corp.
+ice, Intercontinental Exchange Inc
+idxx, Idexx Laboratories, Inc.
+iex, Idex Corporation
+iff, International Flavors & Fragrances Inc.
+ilmn, Illumina Inc
+incy, Incyte Corp.
+intc, Intel Corp.
+intu, Intuit Inc
+ip, International Paper Co.
+ipg, Interpublic Group Of Cos., Inc.
+ir, Ingersoll-Rand Inc
+irm, Iron Mountain Inc.
+isrg, Intuitive Surgical Inc
+it, Gartner, Inc.
+itw, Illinois Tool Works, Inc.
+ivv, BlackRock Institutional Trust Company N.A. - iShares Core S&P 500 ETF
+ivz, Invesco Ltd
+jbht, J.B. Hunt Transport Services, Inc.
+jci, Johnson Controls International plc - Registered Shares
+jkhy, Jack Henry & Associates, Inc.
+jnj, Johnson & Johnson
+jnpr, Juniper Networks Inc
+jpm, JPMorgan Chase & Co.
+k, Kellanova Co
+key, Keycorp
+keys, Keysight Technologies Inc
+kim, Kimco Realty Corporation
+klac, KLA Corp.
+kmb, Kimberly-Clark Corp.
+kmi, Kinder Morgan Inc - Class P
+kmx, Carmax Inc
+ko, Coca-Cola Co
+kr, Kroger Co.
+l, Loews Corp.
+ldos, Leidos Holdings Inc
+len, Lennar Corp. - Class A
+lh, Laboratory Corp. Of America Holdings
+lkq, LKQ Corp
+lly, Lilly(Eli) & Co
+lmt, Lockheed Martin Corp.
+lnc, Lincoln National Corp.
+lnt, Alliant Energy Corp.
+low, Lowe`s Cos., Inc.
+lrcx, Lam Research Corp.
+luv, Southwest Airlines Co
+lvs, Las Vegas Sands Corp
+lyb, LyondellBasell Industries NV - Class A
+lyv, Live Nation Entertainment Inc
+ma, Mastercard Incorporated - Class A
+maa, Mid-America Apartment Communities, Inc.
+mar, Marriott International, Inc. - Class A
+mas, Masco Corp.
+mcd, McDonald`s Corp
+mchp, Microchip Technology, Inc.
+mck, Mckesson Corporation
+mco, Moody`s Corp.
+mdlz, Mondelez International Inc. - Class A
+mdt, Medtronic Plc
+met, Metlife Inc
+mgm, MGM Resorts International
+mhk, Mohawk Industries, Inc.
+mkc, McCormick & Co., Inc. (Non Voting)
+mktx, MarketAxess Holdings Inc.
+mlm, Martin Marietta Materials, Inc.
+mmc, Marsh & McLennan Cos., Inc.
+mmm, 3M Co.
+mnst, Monster Beverage Corp.
+mo, Altria Group Inc.
+moh, Molina Healthcare Inc
+mos, Mosaic Company
+mpc, Marathon Petroleum Corp
+mpwr, Monolithic Power System Inc
+mrk, Merck & Co Inc
+mro, Marathon Oil Corporation
+ms, Morgan Stanley
+msci, MSCI Inc
+msft, Microsoft Corporation
+msi, Motorola Solutions Inc
+mtb, M & T Bank Corp
+mtd, Mettler-Toledo International, Inc.
+mu, Micron Technology Inc.
+nclh, Norwegian Cruise Line Holdings Ltd
+ndaq, Nasdaq Inc - 144A
+ndsn, Nordson Corp.
+ndx, Nasdaq 100 index
+nee, NextEra Energy Inc
+nem, Newmont Corp
+nflx, Netflix Inc.
+ni, NiSource Inc
+nke, Nike, Inc. - Class B
+noc, Northrop Grumman Corp.
+now, ServiceNow Inc
+nrg, NRG Energy Inc.
+nsc, Norfolk Southern Corp.
+ntap, Netapp Inc
+ntrs, Northern Trust Corp.
+nue, Nucor Corp.
+nvda, NVIDIA Corp
+nvr, NVR Inc.
+nwl, Newell Brands Inc
+nws, News Corp - Class B
+nwsa, News Corp - Class A
+nxpi, NXP Semiconductors NV
+o, Realty Income Corp.
+odfl, Old Dominion Freight Line, Inc.
+oke, Oneok Inc.
+omc, Omnicom Group, Inc.
+on, ON Semiconductor Corp.
+orcl, Oracle Corp.
+orly, O`Reilly Automotive, Inc.
+oxy, Occidental Petroleum Corp.
+payc, Paycom Software Inc
+payx, Paychex Inc.
+pcar, Paccar Inc.
+pcg, PG&E Corp.
+peg, Public Service Enterprise Group Inc.
+pep, PepsiCo Inc
+pfe, Pfizer Inc.
+pfg, Principal Financial Group Inc - Registered Shares
+pg, Procter & Gamble Co.
+pgr, Progressive Corp.
+ph, Parker-Hannifin Corp.
+phm, PulteGroup Inc
+pkg, Packaging Corp Of America
+pki, Revvity Inc.
+pld, Prologis Inc
+pm, Philip Morris International Inc
+pnc, PNC Financial Services Group Inc
+pnr, Pentair plc
+pnw, Pinnacle West Capital Corp.
+pool, Pool Corporation
+ppg, PPG Industries, Inc.
+ppl, PPL Corp
+pru, Prudential Financial Inc.
+psa, Public Storage.
+psx, Phillips 66
+ptc, PTC Inc
+pwr, Quanta Services, Inc.
+pxd, Pioneer Natural Resources Co.
+qcom, Qualcomm, Inc.
+rcl, Royal Caribbean Group
+re, Everest Group
+reg, Regency Centers Corporation
+regn, Regeneron Pharmaceuticals, Inc.
+rf, Regions Financial Corp.
+rhi, Robert Half Inc
+rjf, Raymond James Financial, Inc.
+rl, Ralph Lauren Corp - Class A
+rmd, Resmed Inc.
+rok, Rockwell Automation Inc
+rol, Rollins, Inc.
+rop, Roper Technologies Inc
+rost, Ross Stores, Inc.
+rsg, Republic Services, Inc.
+sbac, SBA Communications Corp - Class A
+sbny, Signature Bank
+sbux, Starbucks Corp.
+schw, Charles Schwab Corp.
+see, Sealed Air Corp.
+shw, Sherwin-Williams Co.
+sivb, SVB Financial Group
+sjm, J.M. Smucker Co.
+slb, SLB
+sna, Snap-on, Inc.
+snps, Synopsys, Inc.
+so, Southern Company
+spg, Simon Property Group, Inc.
+spgi, S&P Global Inc
+spx, S&P 500 index
+spy, SSgA Active Trust - SPDR S&P 500 ETF Trust
+sre, Sempra
+ste, Steris Plc
+stld, Steel Dynamics Inc.
+stt, State Street Corp.
+stx, Seagate Technology Holdings Plc
+stz, Constellation Brands Inc - Class A
+swk, Stanley Black & Decker Inc
+swks, Skyworks Solutions, Inc.
+syf, Synchrony Financial
+syk, Stryker Corp.
+syy, Sysco Corp.
+t, AT&T, Inc.
+tap, Molson Coors Beverage Company - Class B
+tdg, Transdigm Group Incorporated
+tdy, Teledyne Technologies Inc
+tech, Bio-Techne Corp
+tel, TE Connectivity Ltd - Registered Shares
+ter, Teradyne, Inc.
+tfx, Teleflex Incorporated
+tgt, Target Corp
+tjx, TJX Companies, Inc.
+tmo, Thermo Fisher Scientific Inc.
+tmus, T-Mobile US Inc
+tpr, Tapestry Inc
+trgp, Targa Resources Corp
+trmb, Trimble Inc
+trow, T. Rowe Price Group Inc.
+trv, Travelers Companies Inc.
+tsco, Tractor Supply Co.
+tsla, Tesla Inc
+tsn, Tyson Foods, Inc. - Class A
+ttwo, Take-Two Interactive Software, Inc.
+txn, Texas Instruments Inc.
+txt, Textron Inc.
+tyl, Tyler Technologies, Inc.
+ual, United Airlines Holdings Inc
+udr, UDR Inc
+uhs, Universal Health Services, Inc. - Class B
+ulta, Ulta Beauty Inc
+unh, Unitedhealth Group Inc
+unp, Union Pacific Corp.
+ups, United Parcel Service, Inc. - Class B
+uri, United Rentals, Inc.
+usb, U.S. Bancorp.
+v, Visa Inc - Class A
+vfc, VF Corp.
+vlo, Valero Energy Corp.
+vmc, Vulcan Materials Co
+voo, Vanguard Group, Inc. - Vanguard S&P 500 ETF
+vrsk, Verisk Analytics Inc
+vrsn, Verisign Inc.
+vrtx, Vertex Pharmaceuticals, Inc.
+vtr, Ventas Inc
+vz, Verizon Communications Inc
+wab, Westinghouse Air Brake Technologies Corp
+wat, Waters Corp.
+wba, Walgreens Boots Alliance Inc
+wdc, Western Digital Corp.
+wec, WEC Energy Group Inc
+wfc, Wells Fargo & Co.
+whr, Whirlpool Corp.
+wm, Waste Management, Inc.
+wmb, Williams Cos Inc
+wmt, Walmart Inc
+wrb, W.R. Berkley Corp.
+wst, West Pharmaceutical Services, Inc.
+wtw, Willis Towers Watson Public Limited Co
+wy, Weyerhaeuser Co.
+wynn, Wynn Resorts Ltd.
+xel, Xcel Energy, Inc.
+xom, Exxon Mobil Corp.
+xray, DENTSPLY Sirona Inc
+xyl, Xylem Inc
+yum, Yum Brands Inc.
+zbh, Zimmer Biomet Holdings Inc
+zbra, Zebra Technologies Corp. - Class A
+zion, Zions Bancorporation N.A
+zts, Zoetis Inc - Class A

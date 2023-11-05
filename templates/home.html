@@ -1,40 +1,69 @@
 {% extends 'base.html' %}
 {% block content %}
+    <link rel="stylesheet" type="text/css" href="static/css/home.css" />
     <div class="container">
-    <div class="flex-container" style="display: flex">
-        <div class="flex-child" style="flex:1; margin-right: 2%">
-            <h2>For beginners</h2>
-            <br/>
-            <h4>What are stocks?</h4>
-            Stocks are a type of security that gives stockholders a share of ownership in a company. Stocks also are
-            called
-            “equities.”
-            <br/><br/>
-            <h4>Why do people buy stocks?</h4>
-            Investors buy stocks for various reasons. Here are some of them:
-            <ul>
-                <li>Capital appreciation, which occurs when a stock rises in price</li>
-                <li>Dividend payments, which come when the company distributes some of its earnings to stockholders</li>
-                <li>Ability to vote shares and influence the company</li>
-            </ul>
-            <h4>Why do companies issue stock?</h4>
-            Companies issue stock to get money for various things, which may include:
-            <ul>
-                <li>Paying off debt</li>
-                <li>Launching new products</li>
-                <li>Expanding into new markets or regions</li>
-                <li>Enlarging facilities or building new ones</li>
-            </ul>
-            <h4>What is a ticker?</h4>
-            A stock symbol or ticker is a unique series of letters assigned to a security for trading purposes.
-            Stocks listed on the New York Stock Exchange (NYSE) can have four or fewer letters.
-            Nasdaq-listed securities can have up to five characters.
-            Symbols are just a shorthand way of describing a company's stock, so there is no significant difference
-            between those that have three letters and those that have four or five. Stock symbols are also known as
-            ticker
-            symbols. For example:
-            <br/><br/>
+        <div class="flex-container" style="display: flex">
+            <div class="flex-child" style="flex:1; margin-right: 2%">
+                <h1>Tester umiejętności początkującego gracza giełdowego</h1>
+                <br/>
+                <h2>Czym jest ta strona?</h2>
+                <p style="margin-right: 30%; font-size: 18px">Tester umiejętności początkującego gracza giełdowego to
+                    strona
+                    pozwalająca sprawdzić posiadane przez użytkownika zdolności w dziedzinie inwestycji lub też
+                    spekulacji.
+                    udostępnia historyczne dane na temat ceny wybranych spółek oraz pozwala dokonać analizy technicznej
+                    polegającej na analizie wykresów i prognozowaniu kursu akcji na podstawie historycznych poziomów
+                    cen. </p>
+
+                <h2>Reguły gry</h2>
+                <ul style="list-style-type: square">
+                    <li style="margin-right: 30%; font-size: 18px">Gracz rozpoczyna grę 2 stycznia 2015 ropku,
+                        posiadajac 5000 dolarów w gotówce.
+                    </li>
+                    <li style="margin-right: 30%; font-size: 18px">Do jego dyspozycji jest wybranych 458 spółek i
+                        indeksów o wysokiej płynności z amerykańskich giełd NYSE oraz NASDAQ.
+                    </li>
+                    <li style="margin-right: 30%; font-size: 18px">Użytkownik ma do wyboru trzy panele:
+                        <ul style="list-style-type: '– '">
+                            <li>
+                                Analityczny, w którym ma podgląd do dwóch najpopularniejszych indeksów
+                                oraz ma możliwość dokładnej analizy spółki wraz z uwzględnieniem wskaźników analizy
+                                technicznej.
+                                Okres dostępny do analizy sięga pięciu lat wstecz od daty rozpoczęcia.
+                            </li>
+                            <li>
+                                Portfel, w którym znajduje się lista aktualnie posiadanych akcji oraz ilość pozostałej
+                                gotówki.
+                                W tym panelu gracz może również dokonać zakupu lub sprzedaży akcji, a także przejść do
+                                następnego dnia.
+                                Przedstawiane kursy akcji są kursami zamknięcia, więc wszystkie operacje na akcjach są
+                                przeprowadzane
+                                po zakończeniu sesji danego dnia.
+                            </li>
+                            <li>
+                                Edukacjyny, w którym może zapoznać się z podstawowymi pojęciami oraz bardziej
+                                zaawansowanymi wskaźnikami
+                                używanymi w analizie technicznej spółki.
+                            </li>
+                        </ul>
+                    </li>
+                    <li style="margin-right: 30%; font-size: 18px">
+                        Gra kończy się 10 listopada 2017 roku.
+                    </li>
+                </ul>
+
+                <h2>Lista wszystkich dostępnych akcji:</h2>
+                <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Wpisz nazwę lub ticker">
+                <div class="list">
+                <ul id="myUL">
+                </ul>
+                </div>
+                <script src="static/script.js"></script>
+
+
+            </div>
         </div>
     </div>
-    </div>
+
+
 {% endblock %}

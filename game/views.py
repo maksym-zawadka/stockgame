@@ -791,3 +791,17 @@ def dopasowania(request):
     dopasowania_list = [dopasowanie for dopasowanie in dopasowania_list if wprowadzony_tekst in dopasowanie.lower()]
 
     return JsonResponse(dopasowania_list, safe=False)
+
+def fullname(request):
+    wprowadzony_tekst = request.GET.get('q', '').lower()
+    fullname_list = []
+    f = open("Stocks/fullname.txt", 'r')
+    linie = f.readlines()
+    if linie:
+        for linia in linie:
+            linia = linia.replace(",", " -")
+            fullname_list.append(linia.strip())
+
+    fullname_list = [dopasowanie for dopasowanie in fullname_list if wprowadzony_tekst in dopasowanie.lower()]
+
+    return JsonResponse(fullname_list, safe=False)

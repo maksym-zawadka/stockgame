@@ -26,6 +26,7 @@ urlpatterns = [
     path('portfolio/', views.portfolio, name="portfolio"),
     path('education/', views.education, name="education"),
     path('dopasowania/', views.dopasowania, name='dopasowania'),
+    path('fullname/', views.fullname, name='fullname'),
     path('summary/', views.summary, name='summary'),
     path('education/what-is-sma.html', lambda request: render(request, 'education/what-is-sma.html'), name='sma'),
     path('education/what-is-ema.html', lambda request: render(request, 'education/what-is-ema.html'), name='ema'),
