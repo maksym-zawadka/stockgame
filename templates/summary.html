@@ -3,17 +3,17 @@
     <div class="container">
         <div style="display: flex; flex-direction: row; justify-content: space-between; margin-top: 30px">
             <div class="container" style="max-width: 70vw;">
-                <h1>The game is over!</h1>
+                <h1>Koniec gry!</h1>
                 <br/>
-                <h2 style="text-align: left">Today is: {{ day }}, {{ today.day }} {{ month }} {{ today.year }}</h2>
+                <h2 style="text-align: left">Dzisiaj jest: {{ day }}, {{ today.day }} {{ month }} {{ today.year }}</h2>
                 <div style="display: flex; flex-direction: row; justify-content: space-between; margin-top: 30px">
                     <table class="table table-striped table-bordered table-hover">
                         <thead class="table-dark">
                         <tr>
-                            <th scope="col">Ticker</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Volume</th>
-                            <th scope="col">Worth</th>
+                            <th scope="col">Symbol</th>
+                            <th scope="col">Cena</th>
+                            <th scope="col">Ilość</th>
+                            <th scope="col">Wartość</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -31,11 +31,11 @@
                 </div>
                 <div style="display: flex">
                     <div style="width: 50%;">
-                        <h4 style="margin-top: 25px">Money: <p style="color: #2a6839 ; display: inline ">
+                        <h4 style="margin-top: 25px">Pieniądze: <p style="color: #2a6839 ; display: inline ">
                             ${{ money }}</p></h4>
-                        <h4>Portfolio value: <p style="color: #2a6839 ; display: inline">${{ portfolio_value }}</p></h4>
-                        <h4>Total: <p style="color: #2a6839 ; display: inline">${{ total }}</p></h4>
-                        <h4>Earnings:
+                        <h4>Wartość portfela: <p style="color: #2a6839 ; display: inline">${{ portfolio_value }}</p></h4>
+                        <h4>Łącznie: <p style="color: #2a6839 ; display: inline">${{ total }}</p></h4>
+                        <h4>Zysk:
                             {% if earnings > 0 %}
                                 <p style="color: #2a6839 ; display: inline">
                             {% endif %}
@@ -43,13 +43,13 @@
                                 <p style="color: #a03e3e ; display: inline">
                             {% endif %}
                             ${{ earnings }}</p></h4>
-                        <h4>Return on Investment: {{ roi }}%</p> </h4>
+                        <h4>Zwrot z inwestycji: {{ roi }}%</p> </h4>
                         <br/>
-                        <h3>Try again!</h3>
+                        <h3>Spróbuj ponownie!</h3>
                         <form class="d-flex" method="POST" name="newgame">
                             {% csrf_token %}
                             <button class="btn btn-outline-success" type="submit" name="newgame" style="width: 120px;">
-                                New game
+                                Nowa gra
                             </button>
                         </form>
                     </div>

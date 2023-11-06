@@ -51,14 +51,14 @@
     </style>
     <div class="container"
          style="display: flex; flex-wrap: wrap; flex-direction: column; justify-content: center; width: 90vw; align-content: center">
-        <h2>Today is: {{ day }}, {{ today.day }} {{ month }} {{ today.year }}</h2>
+        <h2>Dzisiaj jest: {{ day }}, {{ today.day }} {{ month }} {{ today.year }}</h2>
         <div style="display: flex; flex-direction: row; justify-content: center; margin-top: 30px; ">
             <div style="order: 1">
                 {{ divN | safe }}
                 {{ scriptN | safe }}
 
                 <form method="post" name="timeInterval"> {% csrf_token %}
-                    <span>Range: </span>
+                    <span>Zakres: </span>
                     <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="1m">1m</button>
                     <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="3m">3m</button>
                     <button type="submit" class="btn btn-link btn-sm" name="saveTimeN" value="6m">6m</button>
@@ -73,7 +73,7 @@
                 {{ scriptS | safe }}
 
                 <form method="post" id="timeSP" name="timeInterval"> {% csrf_token %}
-                    <span>Range: </span>
+                    <span>Zakres: </span>
                     <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="1m">1m</button>
                     <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="3m">3m</button>
                     <button type="submit" class="btn btn-link btn-sm" name="saveTimeS" value="6m">6m</button>
@@ -83,8 +83,8 @@
                 </form>
             </div>
         </div>
-        <h3 style="margin-top: 40px;">Advanced analysis</h3>
-        <h5 style="margin-top: 20px">Search for stock:</h5>
+        <h3 style="margin-top: 40px;">Zaawansowana analiza</h3>
+        <h5 style="margin-top: 20px">Szukaj spółki:</h5>
         <form class="d-flex" method="POST" name="searchStock" style="margin-bottom: 30px">
 
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -92,7 +92,7 @@
 
             {% csrf_token %}
             <input class="form-control me-2" id="wprowadzonyTekst" list="dopasowaniaList" type="text"
-                   placeholder="enter ticker eg. msft" aria-label="Add Stock" name="ticker" autocomplete="off"
+                   placeholder="wpisz symbol np. msft" aria-label="Add Stock" name="ticker" autocomplete="off"
                    style="width: 15%; ">
             <datalist id="dopasowaniaList">
             </datalist>
@@ -117,7 +117,7 @@
                     });
                 });
             </script>
-            <button class="btn btn-outline-success" type="submit" id="search" name="search_button">Search</button>
+            <button class="btn btn-outline-success" type="submit" id="search" name="search_button">Szukaj</button>
         </form>
         <div style="order: 1; display: flex; justify-content: center; flex-wrap: wrap;">
             <div class="aa">
@@ -130,13 +130,13 @@
 
             {% if divD != "" %}
                 <form method="post" id="indicators" name="timeInterval" style="margin-top: 50px"> {% csrf_token %}
-                    <span>Range: </span>
+                    <span>Zasięg: </span>
                     <button type="submit" class="btn btn-link btn-sm" name="saveTimeD" value="1m">1m</button>
                     <button type="submit" class="btn btn-link btn-sm" name="saveTimeD" value="3m">3m</button>
                     <button type="submit" class="btn btn-link btn-sm" name="saveTimeD" value="6m">6m</button>
                     <button type="submit" class="btn btn-link btn-sm" name="saveTimeD" value="1y">1y</button>
                     <button type="submit" class="btn btn-link btn-sm" name="saveTimeD" value="max">max.</button>
-                    <br/><span style="font-size: 18px">Indicators </span>
+                    <br/><span style="font-size: 18px">Wskaźniki </span>
                     <br/>
                     <input type="checkbox" id="macd" name="MACD">
                     <label for="macd" class="macd"> MACD</label>
@@ -146,9 +146,9 @@
                         <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
                     </svg>
                     <div class="dymek" id="macdtooltip">
-                        <p>The moving average convergence/divergence (MACD) line is calculated by subtracting the
-                            26-period exponential moving average (EMA) from the 12-period EMA. The signal line is a
-                            nine-period EMA of the MACD line.</p>
+                        <p>Linia konwergencji/dywergencji średniej ruchomej (MACD) jest obliczana poprzez odjęcie
+                            26-okresowej wykładniczej średniej ruchomej (EMA) od 12-okresowej EMA. Linia sygnału to
+                            dziewięciookresowa EMA linii MACD.</p>
                     </div>
                     <br/>
                     <input type="checkbox" id="bollinger" name="BOLLINGER">
@@ -160,9 +160,10 @@
                         <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
                     </svg>
                     <div class="dymek" id="bollingertooltip">
-                        <p>A Bollinger Band is a technical analysis tool defined by a set of trendlines. They are
-                            plotted as two standard deviations, both positively and negatively, away from a simple
-                            moving average (SMA) of a security's price and can be adjusted to user preferences. </p>
+                        <p>Wstęga Bollingera to narzędzie analizy technicznej zdefiniowane przez zestaw linii trendu. Są
+                            one wykreślane jako dwa odchylenia standardowe, zarówno dodatnie, jak i ujemne, od prostej
+                            średniej ruchomej (SMA) ceny papieru wartościowego i można je dostosować do preferencji
+                            użytkownika.</p>
                     </div>
                     <br/>
                     <span>SMA:</span>
@@ -172,8 +173,8 @@
                         <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
                     </svg>
                     <div class="dymek" id="smatooltip">
-                        <p>A simple moving average (SMA) calculates the average of a selected range of prices, usually
-                            closing prices, by the number of periods in that range. </p>
+                        <p>Prosta średnia krocząca (SMA) oblicza średnią z wybranego zakresu cen, zazwyczaj cen
+                            zamknięcia, przez liczbę okresów w tym zakresie.</p>
                     </div>
                     <br/>
                     <input type="checkbox" id="sma10" name="SMA10" value="10">
@@ -197,11 +198,10 @@
                         <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
                     </svg>
                     <div class="dymek" id="ematooltip">
-                        <p>An exponential moving average (EMA) is a type of moving average (MA) that places a greater
-                            weight and significance on the most recent data points. The exponential moving average is
-                            also referred to as the exponentially weighted moving average. An exponentially weighted
-                            moving average reacts more significantly to recent price changes than a simple moving
-                            average. </p>
+                        <p>Wykładnicza średnia krocząca (EMA) to rodzaj średniej kroczącej (MA), która przypisuje
+                            większą wagę i znaczenie najnowszym punktom danych. Wykładnicza średnia krocząca jest
+                            również określana jako wykładniczo ważona średnia krocząca. Wykładniczo ważona średnia
+                            krocząca reaguje bardziej znacząco na ostatnie zmiany cen niż zwykła średnia krocząca. </p>
                     </div>
                     <br/>
                     <input type="checkbox" id="ema10" name="EMA10" value="10">

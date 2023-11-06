@@ -16,17 +16,17 @@
         </ul>
     {% endif %}
     <div class="container" style="max-width: 70vw;">
-        <h2 style="text-align: left">Today is: {{ day }}, {{ today.day }} {{ month }} {{ today.year }}</h2>
+        <h2 style="text-align: left">Dzisiaj jest: {{ day }}, {{ today.day }} {{ month }} {{ today.year }}</h2>
         <div style="display: flex; flex-direction: row; justify-content: space-between; margin-top: 30px">
             <table class="table table-striped table-bordered table-hover">
                 <thead class="table-dark">
                 <tr>
-                    <th scope="col", width="20%">Ticker</th>
-                    <th scope="col", width="20%">Price</th>
-                    <th scope="col", width="20%">Volume</th>
-                    <th scope="col", width="20%">Worth</th>
-                    <th scope="col", width="10%">Change</th>
-                    <th scope="col", width="10%">% Change</th>
+                    <th scope="col", width="20%">Symbol</th>
+                    <th scope="col", width="20%">Cena</th>
+                    <th scope="col", width="20%">Ilość</th>
+                    <th scope="col", width="20%">Wartość</th>
+                    <th scope="col", width="10%">Zmiana</th>
+                    <th scope="col", width="10%">Zmiana %</th>
 
                 </tr>
                 </thead>
@@ -54,24 +54,24 @@
                 </tbody>
             </table>
         </div>
-        <h4 style="margin-top: 25px">Money: <p style="color: #2a6839 ; display: inline ">${{ money }}</p></h4>
-        <h4>Portfolio value: <p style="color: #2a6839 ; display: inline">${{ portfolio_value }}</p></h4>
-        <h4>Total: <p style="color: #2a6839 ; display: inline">${{ total }}</p></h4>
+        <h4 style="margin-top: 25px">Pieniądze: <p style="color: #2a6839 ; display: inline ">${{ money }}</p></h4>
+        <h4>Wartość portfela: <p style="color: #2a6839 ; display: inline">${{ portfolio_value }}</p></h4>
+        <h4>Łącznie: <p style="color: #2a6839 ; display: inline">${{ total }}</p></h4>
         <br/><br/>
         <div class="flex-container" style="display: flex">
             <div class="flex-child magenta" style="flex:1">
-                <h1>Buy stock</h1>
+                <h1>Kup akcje</h1>
                 <br/>
 
                 <form class="d-flex" method="POST" name="buy_form">
                     {% csrf_token %}
-                    <input class="form-control me-2" type="text" placeholder="Ticker" aria-label="Add Stock"
+                    <input class="form-control me-2" type="text" placeholder="symbol" aria-label="Add Stock"
                            name="buyticker" id="wprowadzonyTekst" autocomplete="off" list="dopasowaniaList"
                            style="width: 30%">
-                    <input class="form-control me-2" type="search" placeholder="Volume" aria-label="Add Stock"
+                    <input class="form-control me-2" type="search" placeholder="ilość" aria-label="Add Stock"
                            name="buyvolume"
                            style="width: 30%">
-                    <button class="btn btn-outline-success" type="submit" name="buy_button">Buy</button>
+                    <button class="btn btn-outline-success" type="submit" name="buy_button">Kup</button>
                 </form>
                 <datalist id="dopasowaniaList">
                 </datalist>
@@ -98,32 +98,32 @@
                 <br/>
                 <br/>
 
-                <h1>Sell stock</h1>
+                <h1>Sprzedaj akcje</h1>
                 <br/>
                 <form class="d-flex" method="POST" name="sell_form">
                     {% csrf_token %}
-                    <input class="form-control me-2" type="search" placeholder="Ticker" aria-label="Add Stock"
+                    <input class="form-control me-2" type="search" placeholder="symbol" aria-label="Add Stock"
                            name="sellticker"
                            style="width: 30%">
-                    <input class="form-control me-2" type="search" placeholder="Volume" aria-label="Add Stock"
+                    <input class="form-control me-2" type="search" placeholder="ilość" aria-label="Add Stock"
                            name="sellvolume"
                            style="width: 30%">
-                    <button class="btn btn-outline-danger" type="submit" name="sell_button">Sell</button>
+                    <button class="btn btn-outline-danger" type="submit" name="sell_button">Sprzedaj</button>
                 </form>
             </div>
             <div style="align-self:flex-end ">
-                <h4>Go to the next day</h4>
+                <h4>Przejdź do następnego dnia</h4>
                 <form class="d-flex" method="POST" name="next_day">
                     {% csrf_token %}
-                    <button class="btn btn-outline-success" type="submit" name="next_day" style="width: 150px; margin-left: 20px;">Skip day</button>
+                    <button class="btn btn-outline-success" type="submit" name="next_day" style="width: 150px; margin-left: 20px;">Następny dzień</button>
                 </form>
                 <form class="d-flex" method="POST" name="next_week">
                     {% csrf_token %}
-                    <button class="btn btn-outline-success" type="submit" name="next_week" style="width: 150px; margin-left: 20px; margin-top: 20px; margin-bottom: 20px">Skip 7 days</button>
+                    <button class="btn btn-outline-success" type="submit" name="next_week" style="width: 150px; margin-left: 20px; margin-top: 20px; margin-bottom: 20px">Następne 7 dni</button>
                 </form>
                 <form class="d-flex" method="POST" name="next_month">
                     {% csrf_token %}
-                    <button class="btn btn-outline-success" type="submit" name="next_month" style="width: 150px; margin-left: 20px;">Skip 30 days</button>
+                    <button class="btn btn-outline-success" type="submit" name="next_month" style="width: 150px; margin-left: 20px;">Następne 30 dni</button>
                 </form>
             </div>
         </div>

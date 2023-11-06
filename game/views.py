@@ -384,10 +384,26 @@ def analysis(request):
     else:
         messages.error(request, "Wrong ticker")
         request.session['ticker'] = None
+
+    angielskie_dni = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    polskie_dni = ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"]
+    if dayName in angielskie_dni:
+        index = angielskie_dni.index(dayName)
+        dayName=polskie_dni[index]
+
+    angielskie_miesiace = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+                           "October", "November", "December"]
+    polskie_miesiace = ["stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca", "lipca", "sierpnia", "września",
+                        "października", "listopada", "grudnia"]
+    if monthName in angielskie_miesiace:
+        index = angielskie_miesiace.index(monthName)
+        monthName=polskie_miesiace[index]
     return render(request, 'analysis.html',
                   {'today': today, 'day': dayName, 'month': monthName, 'divN': divN, 'scriptN': scriptN, 'divS': divS,
                    'scriptS': scriptS, 'divD': divD, 'scriptD': scriptD, 'scriptMACD': scriptMACD, 'divMACD': divMACD,
                    'ticker': ticker})
+
+
 
 def summary(request):
     if request.method == 'POST':
@@ -463,6 +479,20 @@ def summary(request):
     total = round(portfolio_value+money,3)
     earnings = round(total-5000,3)
     roi=round((earnings/5000)*100,2)
+
+    angielskie_dni = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    polskie_dni = ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"]
+    if dayName in angielskie_dni:
+        index = angielskie_dni.index(dayName)
+        dayName=polskie_dni[index]
+
+    angielskie_miesiace = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+                           "October", "November", "December"]
+    polskie_miesiace = ["stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca", "lipca", "sierpnia", "września",
+                        "października", "listopada", "grudnia"]
+    if monthName in angielskie_miesiace:
+        index = angielskie_miesiace.index(monthName)
+        monthName=polskie_miesiace[index]
     return render(request,'summary.html', {'today': today, 'day': dayName, 'month': monthName, 'money': money,
                                               'output': output, 'ticker': ticker, 'portfolio_value': portfolio_value, 'total': total,'earnings':earnings,'roi':roi,'divSummary': divSummary,
                    'scriptSummary': scriptSummary,})
@@ -771,6 +801,19 @@ def portfolio(request):
     total=f"{round(money+portfolio_value,3):.3f}"
     money = f"{money:.3f}"
     portfolio_value=f"{round(portfolio_value,3):.3f}"
+    angielskie_dni = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    polskie_dni = ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"]
+    if dayName in angielskie_dni:
+        index = angielskie_dni.index(dayName)
+        dayName=polskie_dni[index]
+
+    angielskie_miesiace = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+                           "October", "November", "December"]
+    polskie_miesiace = ["stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca", "lipca", "sierpnia", "września",
+                        "października", "listopada", "grudnia"]
+    if monthName in angielskie_miesiace:
+        index = angielskie_miesiace.index(monthName)
+        monthName=polskie_miesiace[index]
     return render(request, 'portfolio.html', {'today': today, 'day': dayName, 'month': monthName, 'money': money,
                                               'output': output, 'ticker': ticker, 'portfolio_value': portfolio_value,'total': total})
 
