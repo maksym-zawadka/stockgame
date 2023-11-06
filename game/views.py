@@ -791,11 +791,11 @@ def portfolio(request):
                     elif i > linenum:
                         break
             record.append(ticker_item.ticker)
-            record.append(sharePrice)
+            record.append(f"{sharePrice:.3f}")
             record.append(ticker_item.volume)
-            record.append(round((sharePrice*ticker_item.volume),3))
-            record.append(round((sharePrice-yesterdayPrice),3))
-            record.append(round((100*(sharePrice-yesterdayPrice)/yesterdayPrice),2))
+            record.append(f"{round((sharePrice*ticker_item.volume),3):.3f}")
+            record.append(f"{round((sharePrice-yesterdayPrice),2):.2f}")
+            record.append(f"{round((100*(sharePrice-yesterdayPrice)/yesterdayPrice),2):.2f}")
             portfolio_value+=sharePrice*ticker_item.volume
             output.append(record)
     total=f"{round(money+portfolio_value,3):.3f}"
