@@ -7,7 +7,11 @@ Aplikacja ma za zadanie umożliwić użytkownikowi wybór i analizowanie akcji
 z wykorzystaniem wskaźników analizy technicznej. Gracz może również dokonywać 
 transakcji kupna oraz sprzedaży papierów wartościowych. W aplikacji znajduje się 
 również panel edukacyjny, gdzie użytkownik może pogłębić swoją wiedzę na temat 
-inwestowania i analizy technicznej.
+inwestowania i analizy technicznej.  Wobec tego, że aplikacja ma 
+zapewnić użytkownikowi możliwość zastosowania analizy technicznej, konieczne 
+będzie przedstawienie mu rezultatów swoich poczynań. Z tego powodu postanowiłem 
+umieścić całą rozgrywkę w przeszłości, aby gracz mógł zweryfikować obrane przez 
+siebie strategie inwestycyjne bez konieczności czekania tygodni czy też miesięcy. 
 
 **Przyjęte założenia:**</br>
 • Wartość początkowa portfela jest z góry ustalona i wynosi 5000 dolarów</br>
@@ -49,12 +53,21 @@ Struktura pliku przechowującego dane na temat akcji na przykładzie akcji spó�
 
 ## Prezentacja aplikacji</br>
 
-Strona główna</br>
+**Strona główna</br>**
 ![obraz](https://github.com/user-attachments/assets/a499a9fb-e1a9-4bf5-b819-699cd2480523)
 
-Ekran startowy panelu Analiza</br>
+**Ekran startowy panelu Analiza</br>**
 ![obraz](https://github.com/user-attachments/assets/0c94f62a-d8d0-44b7-a9ac-111f3078f4b6)
 
-Zaawansowana analiza akcji Apple</br>
+**Zaawansowana analiza akcji Apple</br>**
 ![obraz](https://github.com/user-attachments/assets/1121abc5-4200-40d3-9533-14b2234df6b4)
+
+**Panel Portfela</br>**
+![obraz](https://github.com/user-attachments/assets/a1bd088d-614b-4279-8751-d3ed30aff462)
+
+**Panel Edukacja**</br>
+![obraz](https://github.com/user-attachments/assets/78646cfb-eb2b-4d00-a48d-69316b9985f1)
+
+**Podsumowanie rozgrywki**</br>
+![obraz](https://github.com/user-attachments/assets/d02baa55-b900-4c75-993e-4d32e8c8f1d1)
 
