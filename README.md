@@ -26,10 +26,30 @@ Diagram przypadków użycia</br>
 ![obraz](https://github.com/user-attachments/assets/3866d235-0725-4d6f-911b-4e9a17c2b073)</br>
 
 ## Architektura aplikacji</br>
-Wybrany wzorzec architektoniczny to MVT(Model-View-Template)</br>
-Model – reprezentacja danych oraz zarządzanie nimi.</br>
-Widok – obsługa żądań, przetwarzanie danych</br>
-Szablon – prezentacja danych użytkownikowi</br>
+Wybrany wzorzec architektoniczny to MVT (Model-View-Template)</br> 
+
+Model – odpowiada za reprezentację danych oraz zarządzanie nimi. Definiuje 
+strukturę danych, obsługę baz danych i logikę biznesową.
+W wykorzystywanym przeze mnie frameworku Django w wersji 4.2.3, 
+modele to klasy napisane w jezyku Python, które definiują strukturę bazy 
+danych, a jednocześnie dostarczają interfejs do operacji na tych danych. 
+Do zarządzania bazą danych wykorzystywana jest wbudowana baza 
+SQLite.</br>
+
+Widok – obsługuje żądania użytkownika, przetwarza dane, komunikuje się 
+z modelem w celu pobrania, modyfikacji lub zapisania danych, a następnie 
+przygotowuje dane do prezentacji w szablonie. 
+W Django widok reprezentowany jest jako funkcja lub klasa w języku 
+Python. Do przetwarzania danych użyte zostały biblioteki numpy i pandas. 
+W procesie pisania kodu wykorzystane zostało środowisko PyCharm 
+2023.1.4, czyli zintegrowane środowisko programistyczne dla języka 
+programowania Python firmy JetBrains.</br>
+
+Szablon – jest odpowiedzialny za prezentację danych użytkownikowi. 
+W Django, szablony są plikami HTML, które zawierają specjalne tagi 
+i filtry do dynamicznego renderowania danych. Dodatkowo do 
+zarządzania wyglądem stron użyty został CSS wraz z biblioteką Bootstrap 
+a do obsługi interakcji wykorzystałem język JavaScript.</br>
 
 Schemat wzorca MVT</br>
 ![obraz](https://github.com/user-attachments/assets/600a228c-3a68-4a08-a0d8-d267f5cbd817)
